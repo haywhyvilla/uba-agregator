@@ -11,18 +11,18 @@ import Sidebar from "@/src/components/Sidebar";
 import DashboardHeader from "@/src/components/DashboardHeader";
 
 const menuItems = [
-    { label: "Channels", itemIcon: channels, stepNumber: 0, pageUrl: "/dashboard" },
-    { label: "Aggregators", itemIcon: aggregator, stepNumber: 1, pageUrl: "/dashboard/aggregator" },
-    { label: "Time Table", itemIcon: timetable, stepNumber: 2, pageUrl: "/dashboard/timetable" },
-    { label: "Data Products ", itemIcon: dataproducts, stepNumber: 3, pageUrl: "/dashboard/dataproducts" },
-    { label: "Switch Sequence", itemIcon: switchsequence, stepNumber: 4, pageUrl: "/dashboard/sequence" },
+    { label: "Inbox", itemIcon: channels, stepNumber: 0, pageUrl: "/dashboard" },
+    { label: "Loan Request", itemIcon: aggregator, stepNumber: 1, pageUrl: "/dashboard/loanrequest" },
+    { label: "Loan Calculator", itemIcon: timetable, stepNumber: 2, pageUrl: "/dashboard/timetable" },
+    { label: "CRC Report", itemIcon: dataproducts, stepNumber: 3, pageUrl: "/dashboard/dataproducts" },
+    { label: "Disbursement Page", itemIcon: switchsequence, stepNumber: 4, pageUrl: "/dashboard/sequence" },
 
 ]
 
 
 
 export default function RootLayout({ children }) {
-    const [selectedStepLabel, setSelectedStepLabel] = useState("Channels");
+    const [selectedStepLabel, setSelectedStepLabel] = useState("Inbox");
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [step, setStep] = useState(0);
 

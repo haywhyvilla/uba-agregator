@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "./sidebar.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import ubaLogo from "@/src/assets/UBA-Logo.svg"
+import abLogo from "@/src/assets/AB-logo.jpg"
 import SidebarItem from "./SidebarItem";
 
 const Sidebar = ({ isSidebarOpen, step, onMenuItemClick, toggleSidebar, menuItems }) => {
@@ -13,7 +13,7 @@ const Sidebar = ({ isSidebarOpen, step, onMenuItemClick, toggleSidebar, menuItem
 
                 <div className={styles.logo}>
                     <Link href="/">
-                        <Image src={ubaLogo} alt="Uba logo" width='160' height='95' />
+                        <Image src={abLogo} alt="Uba logo" width='120' height='60' />
                     </Link>
                 </div>
 

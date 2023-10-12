@@ -5,7 +5,7 @@ import { Button, Checkbox, Form, Input, Spin } from 'antd';
 import { ArrowRight } from "@/src/utility/svg";
 import { toast } from 'sonner';
 import styles from "./signIn.module.scss"
-import ubaLogo from "@/src/assets/UBA-Logo.svg";
+import ablogo from "@/src/assets/AB-logo.jpg";
 
 
 const SignIn = () => {
@@ -30,9 +30,9 @@ const SignIn = () => {
                     >
                         <div className={styles.logoWrapper}>
                             <Image
-                                src={ubaLogo}
-                                width={168}
-                                height={80}
+                                src={ablogo}
+                                width={120}
+                                height={60}
                                 alt="uba Logo"
                                 quality={100}
                                 priority={true}

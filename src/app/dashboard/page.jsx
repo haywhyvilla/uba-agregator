@@ -1,12 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import Channels from "@/src/components/channels"
+import LoanRequest from "@/src/components/loanrequest"
+
 
 const Dashboard = () => {
     return (
         <>
-            <Channels />
+      <LoanRequest/>
         </>
     )
 }

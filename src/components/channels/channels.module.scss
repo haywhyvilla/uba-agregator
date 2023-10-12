@@ -1,0 +1,106 @@
+@import "../../scss/mixins";
+@import "../../scss/variables";
+
+.dashboard {
+    padding: 3rem;
+
+    @include respond(tab-port) {
+        padding: 1rem 0.5rem;
+    }
+
+    .card {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 3rem;
+
+        @include respond(tab-port) {
+            display: block;
+        }
+
+
+        .eachcard {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.6rem;
+            cursor: pointer;
+
+            @include respond(tab-port) {
+                margin-top: 2.4rem;
+            }
+
+
+            p {
+                color: #939393;
+                font-size: 2rem;
+                font-weight: 500;
+            }
+
+
+            .cardFlex {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+
+                .status {
+                    border-radius: 1.5rem;
+                    padding: 0.3rem 0.6rem;
+                    display: flex;
+
+                }
+
+                .rise {
+                    color: #305C45;
+                    background: rgba(48, 92, 69, 0.10);
+                }
+
+                .fall {
+                    color: #E6A960;
+                    background: rgba(230, 169, 96, 0.10);
+
+                }
+
+                p {
+                    color: #313638;
+                    font-size: 0.8rem;
+                    margin-left: 0.5rem;
+                }
+
+                .nariaSvg {
+                    margin-top: -0.4rem;
+                }
+
+                h2 {
+                    color: #313638;
+                    font-size: 1.8rem;
+                }
+            }
+
+            .cardRate {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+
+        }
+    }
+
+
+
+}
+
+.addIcon {
+    position: fixed;
+    bottom: 10rem;
+    right: 10rem;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.addIcon2 {
+    position: fixed;
+    bottom: 5rem;
+    right: 10rem;
+    z-index: 999;
+    cursor: pointer;
+}

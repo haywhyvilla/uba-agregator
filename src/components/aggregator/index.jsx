@@ -1,5 +1,4 @@
 "use client";
-
 import styles from "./loanrequest.module.scss";
 import addIcon from "@/src/assets/addIcon2.svg";
 import Image from "next/image";
@@ -9,9 +8,8 @@ import { Dropdown, Space, Modal, Form, Button, Spin, Input } from "antd";
 import Link from "next/link";
 import { channels } from "@/src/assets/channels.svg";
 import axios from "axios";
-// import addIcon from "@/src/assets/addIcon.svg";
 
-const LoanRequest = () => {
+const Aggregator = () => {
   const [channels, setChannels] = useState([]);
 
   useEffect(() => {
@@ -57,16 +55,10 @@ const LoanRequest = () => {
           </div>
         ))}
       </div>
-      <Image
-        src={addIcon}
-        width={100}
-        height={100}
-        className={styles.addIcon}
-      />
     </section>
   );
 };
 
-export default LoanRequest;
+export default Aggregator;
 
 //

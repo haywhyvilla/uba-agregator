@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import LoanRequest from "@/src/components/loanrequest"
-
+import { useState } from "react";
+import LoanRequest from "@/src/components/loanrequest";
 
 const Dashboard = () => {
-    return (
-        <>
-      <LoanRequest/>
-        </>
-    )
-}
+  return (
+    <>
+      <LoanRequest />
+    </>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

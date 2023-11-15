@@ -12,34 +12,44 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 3rem;
-
     @include respond(tab-port) {
       display: block;
+    }
+    :hover{
+      transform: scale(1.05);
     }
 
     .eachcard {
       background-color: #ffffff;
       padding: 1.5rem;
+      height: 200px;
       border-radius: 0.6rem;
       background-color: #fff;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      text-decoration: none;
+      text-align: center;
+     
 
       @include respond(tab-port) {
         margin-top: 2.4rem;
       }
+    
 
-      p {
-        color: #939393;
-        font-size: 2rem;
-        font-weight: 500;
-      }
+    
 
       .cardFlex {
-        display: flex;
-        justify-content: start;
-        align-items: center;
+        p {
+          color: #d10000;
+          font-size: 10px;
+          font-weight: 500;
+          font-family: Verdana, sans-serif;
+           }
+
+        h2{
+          font-family: Verdana, sans-serif;
+          color: #d10000;
+         }
+
+        }
 
         .status {
           border-radius: 1.5rem;
@@ -60,7 +70,6 @@
         p {
           color: #313638;
           font-size: 0.8rem;
-          margin-left: 0.5rem;
         }
 
         .nariaSvg {
@@ -74,13 +83,21 @@
       }
 
       .cardRate {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        button{
+          padding: 20px;
+          border-radius: 10px;
+          border-color: #fff;
+          cursor: pointer;
+        }
+        :hover{
+          background-color:#d10000;
+          color: #ffffff;
+          transform: scale(1.05);
+        }
       }
     }
   }
-}
+
 
 .addIcon {
   position: fixed;

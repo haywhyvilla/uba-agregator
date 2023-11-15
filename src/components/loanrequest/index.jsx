@@ -37,26 +37,30 @@ const LoanRequest = () => {
 
   return (
     <section className={styles.dashboard}>
-      <div className={styles.card}>
-        {channels.map((item, index) => (
-          <div className={styles.eachcard} key={index}>
-            <p>{item["aggregator-name"]}</p>
-            <div className={styles.cardFlex}>
-              <h2>{item["aggregator-code"]}</h2>
+    <div className={styles.card}>
+      
+    {channels.map((item, index) => (
+      <div className={styles.eachcard} key={index}>
+        <div className={styles.cardFlex}>
+        <p>{item["aggregator-name"]}</p>
+          <h2>{item["aggregator-code"]}</h2>
+        </div>
+        <div className={styles.cardRate}>
+        <button>
+              {item["created-by"]}
+              {item["creation-date"]}
+            </button>
             </div>
-            <div className={styles.cardRate}>
-              <div className={styles.cardFlex}>
-                <button>
-                  {item["created-by"]}
-                  <span>{item["creation-date"]}</span>
-                </button>
-                <p>{item["change-id"]}</p>
-              </div>
-              <p>{item["change-status"]}</p>
-            </div>
+          <div className={styles.cardFlex}>
+            
+            <p>{item["change-id"]}</p>
+            <p>{item["change-status"]}</p>
           </div>
-        ))}
+          
+        
       </div>
+    ))}
+  </div>
       <Image
         src={addIcon}
         width={100}

@@ -5,14 +5,17 @@ import addIcon from "@/src/assets/addIcon2.svg";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { LogoutIcon } from "@/src/utility/svg";
-import { Dropdown, Space, Modal, Form, Button, Spin, Input } from "antd";
+import { Dropdown, Space, Modal, Form, Button, Spin, Input, Table } from "antd";
 import Link from "next/link";
 import { channels } from "@/src/assets/channels.svg";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 // import addIcon from "@/src/assets/addIcon.svg";
 
 const LoanRequest = () => {
   const [channels, setChannels] = useState([]);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [channelsModal, setChannelsModal] = useState(false);
 
   useEffect(() => {
     // Function to fetch data
@@ -20,7 +23,7 @@ const LoanRequest = () => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          "http://16.170.182.130:9898/nip/aggregator?status=approved"
+          "http://16.170.182.130:9898/nip/channel?status=unapproved"
         );
 
         // Set the fetched data to the state
@@ -35,38 +38,288 @@ const LoanRequest = () => {
     fetchData();
   }, []);
 
+  const handleSubmit = async (value) => {
+    setSubmitLoading(true);
+    const formData = {
+      "appl-code": value["appl-code"],
+      "appl-name": value["appl-name"],
+      "auth-flg": value["auth-flg"],
+      "vending-aggregator": value["vending-aggregator"],
+      "last-switch-date": value["last-switch-date"],
+      "failure-threshold": value["failure-threshold"],
+      "data-aggr-code": value["data-aggr-code"],
+      minutes: value["minutes"],
+      "del-flg": value["del-flg"],
+      "del-date": value["del-date"],
+      "del-by": value["del-by"],
+    };
+
+    console.log(formData);
+    try {
+      // Make an HTTP POST request to your endpoint
+
+      const response = await axios.post(
+        "http://16.170.182.130:9898/nip/channel",
+        formData
+      );
+      toast.success(response.data.message);
+      console.log("Form submitted successfully", response.data);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    } finally {
+      setSubmitLoading(false);
+      setChannelsModal(false)
+    }
+  };
+
+  const handleAddVendorClick = () => {
+    // Set the state to true to show the modal
+    setChannelsModal(true);
+  };
+
+  const columns = [
+    {
+      title: "Code",
+      dataIndex: "appl-code",
+      key: "appl-code",
+    },
+    {
+      title: "Name",
+      dataIndex: "appl-name",
+      key: "appl-name",
+    },
+    {
+      title: "Date",
+      dataIndex: "entry-date",
+      key: "entry-date",
+    },
+
+    {
+      title: "failure-threshold",
+      dataIndex: "failure-threshold",
+      key: "failure-threshold",
+    },
+    {
+      title: "minutes",
+      dataIndex: "minutes",
+      key: "minutes",
+    },
+  ];
+
   return (
     <section className={styles.dashboard}>
-    <div className={styles.card}>
-      
-    {channels.map((item, index) => (
-      <div className={styles.eachcard} key={index}>
-        <div className={styles.cardFlex}>
-        <p>{item["aggregator-name"]}</p>
-          <h2>{item["aggregator-code"]}</h2>
-        </div>
-        <div className={styles.cardRate}>
-        <button>
-              {item["created-by"]}
-              {item["creation-date"]}
-            </button>
-            </div>
-          <div className={styles.cardFlex}>
-            
-            <p>{item["change-id"]}</p>
-            <p>{item["change-status"]}</p>
-          </div>
-          
-        
+      <div className={styles.tableSection}>
+        <Table columns={columns} dataSource={channels} />
       </div>
-    ))}
-  </div>
       <Image
         src={addIcon}
         width={100}
         height={100}
         className={styles.addIcon}
+        onClick={handleAddVendorClick}
       />
+      <Modal
+        centered
+        open={channelsModal}
+        onOk={() => setChannelsModal(false)}
+        onCancel={() => {
+          setChannelsModal(false);
+        }}
+        footer={null}
+        style={{ maxHeight: "600px", overflowY: "auto" }}
+      >
+        <div className="headings text-center">
+          <h4
+            style={{
+              fontSize: "18px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Add Channels
+          </h4>
+          <p style={{ fontSize: "16px", textAlign: "center" }}>
+            Fill the fields below to add channels.
+          </p>
+        </div>
+
+        <Form layout="vertical" onFinish={handleSubmit}>
+          <Form.Item
+            label="Application Code"
+            className={"username-input"}
+            name="appl-code"
+            rules={[
+              {
+                required: true,
+                message: "Please input application code!",
+              },
+            ]}
+          >
+            <Input placeholder="Input application code" />
+          </Form.Item>
+
+          <Form.Item
+            label="Application Name"
+            className={"username-input"}
+            name="appl-name"
+            rules={[
+              {
+                required: true,
+                message: "Please input application name!",
+              },
+            ]}
+          >
+            <Input placeholder="Input application name" />
+          </Form.Item>
+
+          <Form.Item
+            label="auth-flg"
+            className={"username-input"}
+            name="auth-flg"
+            rules={[
+              {
+                required: true,
+                message: "Please input auth-flg!",
+              },
+            ]}
+          >
+            <Input placeholder="Input auth-flg" />
+          </Form.Item>
+
+          <Form.Item
+            label="vending-aggregator"
+            name="vending-aggregator"
+            rules={[
+              {
+                required: true,
+                message: "Please input vending-aggregator!",
+              },
+            ]}
+          >
+            <Input placeholder="Input vending-aggregator" />
+          </Form.Item>
+
+          <Form.Item
+            label="last-switch-date"
+            className={"username-input"}
+            name="last-switch-date"
+            rules={[
+              {
+                required: true,
+                message: "Please input last-switch-date!",
+              },
+            ]}
+          >
+            <Input placeholder="Input last-switch-date" />
+          </Form.Item>
+
+          <Form.Item
+            label="failure-threshold"
+            className={"username-input"}
+            name="failure-threshold"
+            rules={[
+              {
+                required: true,
+                message: "Please input failure-threshold!",
+              },
+            ]}
+          >
+            <Input placeholder="Input failure-threshold" />
+          </Form.Item>
+
+          <Form.Item
+            label="data-aggr-code"
+            className={"username-input"}
+            name="data-aggr-code"
+            rules={[
+              {
+                required: true,
+                message: "Please input data-aggr-code!",
+              },
+            ]}
+          >
+            <Input placeholder="Input data-aggr-code" />
+          </Form.Item>
+
+          <Form.Item
+            label="minutes"
+            name="minutes"
+            rules={[
+              {
+                required: true,
+                message: "Please input minutes!",
+              },
+            ]}
+          >
+            <Input placeholder="Input minutes" />
+          </Form.Item>
+
+          <Form.Item
+            label="del-flg"
+            className={"username-input"}
+            name="del-flg"
+            rules={[
+              {
+                required: false,
+                message: "Please input del-flg!",
+              },
+            ]}
+          >
+            <Input placeholder="Input del-flg" />
+          </Form.Item>
+
+          <Form.Item
+            label="del-date"
+            className={"username-input"}
+            name="del-date"
+            rules={[
+              {
+                required: false,
+                message: "Please input del-date!",
+              },
+            ]}
+          >
+            <Input placeholder="Input del-date" />
+          </Form.Item>
+
+          <Form.Item
+            label="del-by"
+            name="del-by"
+            rules={[
+              {
+                required: false,
+                message: "Please del-by!",
+              },
+            ]}
+          >
+            <Input placeholder="Input del-by" />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: "#d20303", color: "#FFF" }}
+              className={
+                submitLoading
+                  ? "our-btn-fade w-100 mt-4 mb-4"
+                  : "w-100 mt-4 mb-4"
+              }
+              // loading={sunmitLoading}
+              disabled={submitLoading}
+            >
+              {submitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: "white" }}
+                />
+              ) : (
+                <>Submit</>
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Modal>
     </section>
   );
 };

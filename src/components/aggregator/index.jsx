@@ -44,19 +44,15 @@ const Aggregator = () => {
               <h2>{item["aggregator-code"]}</h2>
             </div>
             <div className={styles.cardRate}>
-            <button>
-                  {item["created-by"]}
-                  {item["creation-date"]}
-                </button>
+            <span>{item["created-by"]}</span><br/>
+            <span>{item["creation-date"]}</span>
                 </div>
-              <div className={styles.cardFlex}>
-                
+              <div className={styles.cardId}>
+
                 <p>{item["change-id"]}</p>
                 <p>{item["change-status"]}</p>
               </div>
-              
-            
-          </div>
+            </div>
         ))}
       </div>
     </section>

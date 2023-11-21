@@ -6,11 +6,14 @@ import React, { useState, useEffect } from "react";
 import { LogoutIcon } from "@/src/utility/svg";
 import { Dropdown, Space, Modal, Form, Button, Spin, Input } from "antd";
 import Link from "next/link";
-import { channels } from "@/src/assets/channels.svg";
+import { aggregator } from "@/src/assets/aggregator.svg";
 import axios from "axios";
 
 const Aggregator = () => {
-  const [channels, setChannels] = useState([]);
+  const [aggregator, setAggregators] = useState([]);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [aggregatorsModal, setAggregatorsModal] = useState(false);
+
 
   useEffect(() => {
     // Function to fetch data
@@ -23,7 +26,7 @@ const Aggregator = () => {
 
         // Set the fetched data to the state
         console.log(response);
-        setChannels(response.data.data);
+        setAggregators(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -33,11 +36,43 @@ const Aggregator = () => {
     fetchData();
   }, []);
 
+  const handleSubmit = async (value) => {
+    setSubmitLoading(true);
+    const formData = {
+      "agg-code": value["agg-code"],
+      "agg-name": value["agg-name"],
+      
+    };
+
+    console.log(formData);
+    try {
+      // Make an HTTP POST request to your endpoint
+
+      const response = await axios.post(
+        "http://localhost:9898/nip/aggregator",
+        formData
+      );
+      toast.success(response.data.message);
+      console.log("Form submitted successfully", response.data);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    } finally {
+      setSubmitLoading(false);
+      setAggregatorsModal(false)
+    }
+  };
+
+  const handleAddVendorClick = () => {
+    // Set the state to true to show the modal
+    setAggregatorsModal(true);
+  };
+
   return (
     <section className={styles.dashboard}>
       <div className={styles.card}>
       
-        {channels.map((item, index) => (
+        {aggregator.map((item, index) => (
           <div className={styles.eachcard} key={index}>
             <div className={styles.cardFlex}>
             <p>{item["aggregator-name"]}</p>
@@ -55,6 +90,95 @@ const Aggregator = () => {
             </div>
         ))}
       </div>
+      <Image
+      src={addIcon}
+      width={100}
+      height={100}
+      className={styles.addIcon}
+      onClick={handleAddVendorClick}
+    />
+
+    <Modal
+        centered
+        open={aggregatorsModal}
+        onOk={() => setAggregatorsModal(false)}
+        onCancel={() => {
+          setAggregatorsModal(false);
+        }}
+        footer={null}
+        style={{ maxHeight: "600px", overflowY: "auto" }}
+      >
+        <div className="headings text-center">
+          <h4
+            style={{
+              fontSize: "18px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Add Aggregator
+          </h4>
+          <p style={{ fontSize: "16px", textAlign: "center" }}>
+            Fill the fields below to add aggregator.
+          </p>
+        </div>
+
+    <Form layout="vertical" onFinish={handleSubmit}>
+    <Form.Item
+            label="Aggregator Name"
+            className={"username-input"}
+            name="agg-name"
+            rules={[
+              {
+                required: true,
+                message: "Please input aggregator name!",
+              },
+            ]}
+          >
+            <Input placeholder="Input aggregator name" />
+          </Form.Item>
+
+          <Form.Item
+            label="Aggregator Code"
+            className={"username-input"}
+            name="agg-code"
+            rules={[
+              {
+                required: true,
+                message: "Please input aggregator code!",
+              },
+            ]}
+          >
+            <Input placeholder="Input aggregator code" />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: "#d20303", color: "#FFF" }}
+              className={
+                submitLoading
+                  ? "our-btn-fade w-100 mt-4 mb-4"
+                  : "w-100 mt-4 mb-4"
+              }
+              // loading={sunmitLoading}
+              disabled={submitLoading}
+            >
+              {submitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: "white" }}
+                />
+              ) : (
+                <>Submit</>
+              )}
+            </Button>
+          </div>
+
+    </Form>
+    </Modal>
+  
+  
     </section>
   );
 };

@@ -7,46 +7,48 @@
   @include respond(tab-port) {
     padding: 1rem 0.5rem;
   }
+  
 
   .card {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 3rem;
+
+   
     @include respond(tab-port) {
       display: block;
     }
-    :hover{
-      transform: scale(1.05);
-    }
+   
 
     .eachcard {
-      background-color: #ffffff;
+      background-color: #fafafa;
       padding: 1.5rem;
       height: 200px;
       border-radius: 0.6rem;
-      background-color: #fff;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      text-align: left;
+      
      
 
       @include respond(tab-port) {
         margin-top: 2.4rem;
       }
-    
+      
+     
 
     
 
       .cardFlex {
         p {
-          color: #d10000;
+          color: #8d000098;
           font-size: 10px;
           font-weight: 500;
-          font-family: Verdana, sans-serif;
+          font-family: 'Lucida Sans';
            }
 
         h2{
-          font-family: Verdana, sans-serif;
-          color: #d10000;
+          font-family: 'Lucida Sans';
+          color: #8d000098;
          }
 
         }
@@ -80,21 +82,29 @@
           color: #313638;
           font-size: 1.8rem;
         }
+
+        .cardRate {
+          font-family:'Lucida Sans';
+          color: #8d000098;
+          font-weight: 400;
+          margin-top: 5%;
+        }
+        .cardId{
+          margin: 10px auto;
+
+
+
+          p{
+            font-family:'Lucida Sans';
+          color: #8d000098;
+          font-weight: 900;
+          font-size: 10px;
+          }
+        }
+
       }
 
-      .cardRate {
-        button{
-          padding: 20px;
-          border-radius: 10px;
-          border-color: #fff;
-          cursor: pointer;
-        }
-        :hover{
-          background-color:#d10000;
-          color: #ffffff;
-          transform: scale(1.05);
-        }
-      }
+      
     }
   }
 

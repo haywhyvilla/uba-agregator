@@ -69,7 +69,7 @@ const LoanRequest = () => {
       console.log(error);
     } finally {
       setSubmitLoading(false);
-      setChannelsModal(false)
+      setChannelsModal(false);
     }
   };
 
@@ -77,6 +77,14 @@ const LoanRequest = () => {
     // Set the state to true to show the modal
     setChannelsModal(true);
   };
+
+  const generateViewsContent = (record) => (
+    <div className={styles.viewBtn}>
+      <a href={`#`}>
+        <button className="view-profile">View details</button>
+      </a>
+    </div>
+  );
 
   const columns = [
     {
@@ -105,7 +113,24 @@ const LoanRequest = () => {
       dataIndex: "minutes",
       key: "minutes",
     },
+
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_, record) => generateViewsContent(record),
+    },
   ];
+
+  const handleRowClick = (record) => {
+    router.push(`#`);
+  };
+
+  const rowProps = (record) => {
+    return {
+      onClick: () => handleRowClick(record),
+    };
+  };
 
   return (
     <section className={styles.dashboard}>

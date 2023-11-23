@@ -24,7 +24,7 @@ const menuItems = [
     pageUrl: "/dashboard/aggregators",
   },
   {
-    label: "Loan Calculator",
+    label: "Time table",
     itemIcon: timetable,
     stepNumber: 2,
     pageUrl: "/dashboard/timetable",

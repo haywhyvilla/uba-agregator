@@ -80,9 +80,9 @@ const LoanRequest = () => {
 
   const generateViewsContent = (record) => (
     <div className={styles.viewBtn}>
-      <a href={`#`}>
-        <button className="view-profile">View details</button>
-      </a>
+      <Link href={`/dashboard/${record["change-id"]}`}>
+        <button style={{ cursor: "pointer" }}>View details</button>
+      </Link>
     </div>
   );
 
@@ -123,7 +123,7 @@ const LoanRequest = () => {
   ];
 
   const handleRowClick = (record) => {
-    router.push(`#`);
+    router.push(`/dashboard/${record["change-id"]}`);
   };
 
   const rowProps = (record) => {
@@ -135,7 +135,7 @@ const LoanRequest = () => {
   return (
     <section className={styles.dashboard}>
       <div className={styles.tableSection}>
-        <Table columns={columns} dataSource={channels} />
+        <Table columns={columns} dataSource={channels} onRow={rowProps} />
       </div>
       <Image
         src={addIcon}

@@ -4,16 +4,21 @@ import addIcon from "@/src/assets/addIcon2.svg";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { LogoutIcon } from "@/src/utility/svg";
-import { Dropdown, Space, Modal, Form, Button, Spin, Input } from "antd";
+import { Dropdown, Space, Modal, Form, Spin, Input } from "antd";
 import Link from "next/link";
 import { aggregator } from "@/src/assets/aggregator.svg";
 import axios from "axios";
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import CardContent from "@mui/material/CardContent";
+import { Button as AntdButton } from "antd";
 
 const Aggregator = () => {
   const [aggregator, setAggregators] = useState([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [aggregatorsModal, setAggregatorsModal] = useState(false);
-
 
   useEffect(() => {
     // Function to fetch data
@@ -41,7 +46,6 @@ const Aggregator = () => {
     const formData = {
       "agg-code": value["agg-code"],
       "agg-name": value["agg-name"],
-      
     };
 
     console.log(formData);
@@ -49,7 +53,7 @@ const Aggregator = () => {
       // Make an HTTP POST request to your endpoint
 
       const response = await axios.post(
-        "http://localhost:9898/nip/aggregator",
+        "http://16.170.182.130:9898/nip/aggregator",
         formData
       );
       toast.success(response.data.message);
@@ -59,7 +63,7 @@ const Aggregator = () => {
       console.log(error);
     } finally {
       setSubmitLoading(false);
-      setAggregatorsModal(false)
+      setAggregatorsModal(false);
     }
   };
 
@@ -71,34 +75,68 @@ const Aggregator = () => {
   return (
     <section className={styles.dashboard}>
       <div className={styles.card}>
-      
         {aggregator.map((item, index) => (
-          <div className={styles.eachcard} key={index}>
-            <div className={styles.cardFlex}>
-            <p>{item["aggregator-name"]}</p>
-              <h2>{item["aggregator-code"]}</h2>
-            </div>
-            <div className={styles.cardRate}>
-            <span>{item["created-by"]}</span><br/>
-            <span>{item["creation-date"]}</span>
-                </div>
-              <div className={styles.cardId}>
+          // <div className={styles.eachcard} key={index}>
+          //   <div className={styles.cardFlex}>
+          //     <p>{item["aggregator-name"]}</p>
+          //     <h2>{item["aggregator-code"]}</h2>
+          //   </div>
+          //   <div className={styles.cardRate}>
+          //     <span>{item["created-by"]}</span>
+          //     <br />
+          //     <span>{item["creation-date"]}</span>
+          //   </div>
+          //   <div className={styles.cardId}>
+          //     <p>{item["change-id"]}</p>
+          //     <p>{item["change-status"]}</p>
+          //   </div>
+          // </div>
+          <Card key={index}>
+            <CardContent
+              sx={{ p: (theme) => `${theme.spacing(3, 5.25, 4)} !important` }}
+            >
+              <Typography variant="h5" sx={{ mb: 2, fontSize: "1.5rem" }}>
+                {item["aggregator-name"]}
+              </Typography>
+              <Typography variant="h5" sx={{ mb: 2 }}>
+                {item["change-id"]}
+              </Typography>
 
-                <p>{item["change-id"]}</p>
-                <p>{item["change-status"]}</p>
-              </div>
-            </div>
+              <Typography sx={{ mb: 2 }}>{item["aggregator-code"]}</Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                by: {item["created-by"]}
+              </Typography>
+            </CardContent>
+            <Link href={`/dashboard/aggregators/${item["change-id"]}`}>
+              <Button
+                variant="contained"
+                sx={{
+                  fontSize: "1.5rem",
+                  py: 2.5,
+                  width: "100%",
+                  backgroundColor: "#c63531",
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  "&:hover": {
+                    backgroundColor: "#c63531",
+                  },
+                }}
+              >
+                Veiw Aggregator details
+              </Button>
+            </Link>
+          </Card>
         ))}
       </div>
       <Image
-      src={addIcon}
-      width={100}
-      height={100}
-      className={styles.addIcon}
-      onClick={handleAddVendorClick}
-    />
+        src={addIcon}
+        width={100}
+        height={100}
+        className={styles.addIcon}
+        onClick={handleAddVendorClick}
+      />
 
-    <Modal
+      <Modal
         centered
         open={aggregatorsModal}
         onOk={() => setAggregatorsModal(false)}
@@ -123,8 +161,8 @@ const Aggregator = () => {
           </p>
         </div>
 
-    <Form layout="vertical" onFinish={handleSubmit}>
-    <Form.Item
+        <Form layout="vertical" onFinish={handleSubmit}>
+          <Form.Item
             label="Aggregator Name"
             className={"username-input"}
             name="agg-name"
@@ -153,7 +191,7 @@ const Aggregator = () => {
           </Form.Item>
 
           <div className="pt-lg-5 pt-4">
-            <Button
+            <AntdButton
               htmlType="submit"
               style={{ background: "#d20303", color: "#FFF" }}
               className={
@@ -172,13 +210,10 @@ const Aggregator = () => {
               ) : (
                 <>Submit</>
               )}
-            </Button>
+            </AntdButton>
           </div>
-
-    </Form>
-    </Modal>
-  
-  
+        </Form>
+      </Modal>
     </section>
   );
 };

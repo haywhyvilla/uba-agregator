@@ -1,9 +1,12 @@
 import React from "react";
+import FileUploader from "@/src/components/timetable";
 
 function Timetable() {
-    return (
-        <></>
-    )
+  return (
+    <>
+      <FileUploader />
+    </>
+  );
 }
 
 export default Timetable;

@@ -14,6 +14,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import { Button as AntdButton } from "antd";
+import { ToastContainer, toast } from "react-toastify";
 
 const Aggregator = () => {
   const [aggregator, setAggregators] = useState([]);
@@ -44,8 +45,8 @@ const Aggregator = () => {
   const handleSubmit = async (value) => {
     setSubmitLoading(true);
     const formData = {
-      "agg-code": value["agg-code"],
-      "agg-name": value["agg-name"],
+      "aggregator-name": value["aggregator-name"],
+      "aggregator-code": value["aggregator-code"],
     };
 
     console.log(formData);
@@ -95,15 +96,17 @@ const Aggregator = () => {
             <CardContent
               sx={{ p: (theme) => `${theme.spacing(3, 5.25, 4)} !important` }}
             >
-              <Typography variant="h5" sx={{ mb: 2, fontSize: "1.5rem" }}>
+              <Typography variant="h5" sx={{ mb: 2, fontSize: "2.5rem" }}>
                 {item["aggregator-name"]}
               </Typography>
-              <Typography variant="h5" sx={{ mb: 2 }}>
+              <Typography variant="h5" sx={{ mb: 2, fontSize: "2rem" }}>
                 {item["change-id"]}
               </Typography>
 
-              <Typography sx={{ mb: 2 }}>{item["aggregator-code"]}</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
+              <Typography sx={{ mb: 2, fontSize: "2rem" }}>
+                {item["aggregator-code"]}
+              </Typography>
+              <Typography sx={{ color: "text.secondary", fontSize: "2rem" }}>
                 by: {item["created-by"]}
               </Typography>
             </CardContent>
@@ -111,7 +114,8 @@ const Aggregator = () => {
               <Button
                 variant="contained"
                 sx={{
-                  fontSize: "1.5rem",
+                  cursor: "pointer",
+                  fontSize: "2rem",
                   py: 2.5,
                   width: "100%",
                   backgroundColor: "#c63531",
@@ -122,7 +126,7 @@ const Aggregator = () => {
                   },
                 }}
               >
-                Veiw Aggregator details
+                Veiw
               </Button>
             </Link>
           </Card>
@@ -165,7 +169,7 @@ const Aggregator = () => {
           <Form.Item
             label="Aggregator Name"
             className={"username-input"}
-            name="agg-name"
+            name="aggregator-name"
             rules={[
               {
                 required: true,
@@ -179,7 +183,7 @@ const Aggregator = () => {
           <Form.Item
             label="Aggregator Code"
             className={"username-input"}
-            name="agg-code"
+            name="aggregator-code"
             rules={[
               {
                 required: true,

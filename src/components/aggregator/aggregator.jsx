@@ -17,7 +17,7 @@ import Divider from "@mui/material/Divider";
 
 const DetailsView = ({ aggregator }) => {
   const [aggregators, setAggregators] = useState([]);
-  const [value, setValue] = useState("Channels-details");
+  const [value, setValue] = useState("Aggregator-details");
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
@@ -49,7 +49,7 @@ const DetailsView = ({ aggregator }) => {
       <DetailsWrapper>
         <TabContext value={value}>
           <Tab
-            value="Channels-details"
+            value="Agregator-details"
             label={
               <span
                 style={{
@@ -58,14 +58,14 @@ const DetailsView = ({ aggregator }) => {
                   fontWeight: "700",
                 }}
               >
-                Channel Details
+                Aggregator Details
               </span>
             }
           />
 
           <fieldset sx={{ marginBottom: "1200px" }}>
             <legend style={{ fontSize: "2rem", fontWeight: "700" }}>
-              Channel Details
+              Aggregator Details
             </legend>
 
             <TableContainer
@@ -156,10 +156,6 @@ const DetailsView = ({ aggregator }) => {
                       {aggregators["change-status"]}
                     </TableCell>
                   </TableRow>
-
-                
-
-              
                 </TableBody>
               </Table>
             </TableContainer>

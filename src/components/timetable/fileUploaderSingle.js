@@ -37,8 +37,9 @@ const FileUploaderSingle = () => {
           }
         );
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log("File uploaded successfully");
+          toast.success(response.data.message);
           // Handle success, e.g., show a success message
         } else {
           console.error("File upload failed");

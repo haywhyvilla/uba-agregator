@@ -15,31 +15,48 @@ import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import { Button as AntdButton } from "antd";
 import { ToastContainer, toast } from "react-toastify";
+import PageHeader from "./pageHeader";
 
 const Aggregator = () => {
   const [aggregator, setAggregators] = useState([]);
+  const [unApproved, setUnApproved] = useState([])
   const [submitLoading, setSubmitLoading] = useState(false);
   const [aggregatorsModal, setAggregatorsModal] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      // Make a GET request to the specified endpoint
+      const response = await axios.get(
+        "http://16.170.182.130:9898/nip/aggregator?status=approved"
+      );
+
+      // Set the fetched data to the state
+      console.log(response);
+      setAggregators(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchData2 = async () => {
+    try {
+      // Make a GET request to the specified endpoint
+      const response = await axios.get(
+        "http://16.170.182.130:9898/nip/aggregator?status=unapproved"
+      );
+
+      // Set the fetched data to the state
+      console.log(response);
+      setUnApproved(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
-    // Function to fetch data
-    const fetchData = async () => {
-      try {
-        // Make a GET request to the specified endpoint
-        const response = await axios.get(
-          "http://16.170.182.130:9898/nip/aggregator?status=approved"
-        );
-
-        // Set the fetched data to the state
-        console.log(response);
-        setAggregators(response.data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    // Call the fetchData function
+   
     fetchData();
+    fetchData2();
   }, []);
 
   const handleSubmit = async (value) => {
@@ -77,21 +94,7 @@ const Aggregator = () => {
     <section className={styles.dashboard}>
       <div className={styles.card}>
         {aggregator.map((item, index) => (
-          // <div className={styles.eachcard} key={index}>
-          //   <div className={styles.cardFlex}>
-          //     <p>{item["aggregator-name"]}</p>
-          //     <h2>{item["aggregator-code"]}</h2>
-          //   </div>
-          //   <div className={styles.cardRate}>
-          //     <span>{item["created-by"]}</span>
-          //     <br />
-          //     <span>{item["creation-date"]}</span>
-          //   </div>
-          //   <div className={styles.cardId}>
-          //     <p>{item["change-id"]}</p>
-          //     <p>{item["change-status"]}</p>
-          //   </div>
-          // </div>
+        
           <Card key={index}>
             <CardContent
               sx={{ p: (theme) => `${theme.spacing(3, 5.25, 4)} !important` }}
@@ -132,6 +135,64 @@ const Aggregator = () => {
           </Card>
         ))}
       </div>
+
+      <PageHeader
+            title={
+              <Typography variant='h4' sx={{ mb: 2, mt: 3, fontSize: "2.6rem", }}>
+               UnApproved Aggregator
+              </Typography>
+            }
+            subtitle={
+              <Typography sx={{ color: 'text.secondary', fontSize: "2rem", mb: 2, }}>
+                Kindly Use this button to see unapproved Aggragator details and Approve.
+              </Typography>
+            }
+          />
+
+<div className={styles.card}>
+        {unApproved.map((item, index) => (
+        
+          <Card key={index}>
+            <CardContent
+              sx={{ p: (theme) => `${theme.spacing(3, 5.25, 4)} !important` }}
+            >
+              <Typography variant="h5" sx={{ mb: 2, fontSize: "2.5rem" }}>
+                {item["aggregator-name"]}
+              </Typography>
+              <Typography variant="h5" sx={{ mb: 2, fontSize: "2rem" }}>
+                {item["change-id"]}
+              </Typography>
+
+              <Typography sx={{ mb: 2, fontSize: "2rem" }}>
+                {item["aggregator-code"]}
+              </Typography>
+              <Typography sx={{ color: "text.secondary", fontSize: "2rem" }}>
+                by: {item["created-by"]}
+              </Typography>
+            </CardContent>
+            <Link href={`/dashboard/aggregators/${item["change-id"]}`}>
+              <Button
+                variant="contained"
+                sx={{
+                  cursor: "pointer",
+                  fontSize: "2rem",
+                  py: 2.5,
+                  width: "100%",
+                  backgroundColor: "#c63531",
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  "&:hover": {
+                    backgroundColor: "#c63531",
+                  },
+                }}
+              >
+                Veiw
+              </Button>
+            </Link>
+          </Card>
+        ))}
+      </div>
+
       <Image
         src={addIcon}
         width={100}

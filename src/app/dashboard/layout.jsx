@@ -24,13 +24,13 @@ const menuItems = [
     pageUrl: "/dashboard/aggregators",
   },
   {
-    label: "Time table",
+    label: "Time Table Upload",
     itemIcon: timetable,
     stepNumber: 2,
     pageUrl: "/dashboard/timetable",
   },
   {
-    label: "CRC Report",
+    label: "Time Tables",
     itemIcon: dataproducts,
     stepNumber: 3,
     pageUrl: "/dashboard/dataproducts",

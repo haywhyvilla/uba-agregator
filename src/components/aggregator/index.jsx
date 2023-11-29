@@ -170,7 +170,7 @@ const Aggregator = () => {
                 by: {item["created-by"]}
               </Typography>
             </CardContent>
-            <Link href={`/dashboard/aggregators/${item["change-id"]}`}>
+            <Link href={`/dashboard/aggregators/upapproved/${item["change-id"]}`}>
               <Button
                 variant="contained"
                 sx={{

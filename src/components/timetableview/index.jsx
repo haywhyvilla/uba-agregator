@@ -55,7 +55,7 @@ const Timetable = () => {
                 by: {item["upload-by"]}
               </Typography>
             </CardContent>
-            <Link href="#">
+            <Link href={`/dashboard/dataproducts/${item["document-id"]}`}>
               <Button
                 variant="contained"
                 sx={{

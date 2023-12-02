@@ -5,6 +5,7 @@ import { DetailsWrapper } from "../../utility/style";
 import axios from "axios";
 import { Table, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { CSVLink } from 'react-csv';
 
 const DetailsView = ({ timetable }) => {
   const [data, setData] = useState([])
@@ -13,7 +14,7 @@ const DetailsView = ({ timetable }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://16.170.182.130:9898/nip/timetable?status=unapproved&id=${timetable}`
+          `http://16.170.182.130:9898/nip/timetable?status=approved&id=${timetable}`
         );
   
         console.log(response.data.data.timetable);
@@ -150,9 +151,43 @@ const DetailsView = ({ timetable }) => {
   };
 
   return (
-    <section className={styles.dashboard} style={{ overflowX: "scroll" }}>
-      <Table columns={columns} dataSource={data} bordered pagination={{ pageSize: 100 }} />
-    </section>
+    <section className={styles.dashboard} style={{ overflowX: "scroll", paddingRight: "5rem" }}>
+         <div style={{ marginBottom: 16 }}>
+        <CSVLink
+          data={data}
+          filename={`timetable_${timetable}.csv`}
+          className="ant-btn ant-btn-primary ant-btn-round"
+          style={{ float: 'right', marginBottom: "3rem" }}
+        >
+           <p
+                style={{
+                  backgroundColor: '#f50606',
+                  color: '#ffffff',
+                  padding: '10px 15px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  display: 'inline-block'
+                }}
+              >
+                Export CSV
+              </p>
+        </CSVLink>
+      </div>
+    <style jsx global>{`
+      .ant-table-cell {
+        border: 1px solid #000; /* Customize the cell border */
+      }
+
+      .ant-table-thead > tr > th {
+        border: 1px solid #000; /* Customize the header cell border */
+      }
+
+      .ant-table-tbody > tr > td {
+        border: 1px solid #000; /* Customize the body cell border */
+      }
+    `}</style>
+    <Table columns={columns} dataSource={data} bordered pagination={{ pageSize: 100 }} />
+  </section>
   );
 };
 

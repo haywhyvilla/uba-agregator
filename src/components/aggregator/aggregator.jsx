@@ -162,7 +162,7 @@ const DetailsView = ({ aggregator }) => {
           </fieldset>
         </TabContext>
 
-        <CardActions>
+        {/* <CardActions>
           <Button
             type="submit"
             sx={{ mr: 2, backgroundColor: "#71ace0", fontSize: "1.8rem" }}
@@ -178,7 +178,7 @@ const DetailsView = ({ aggregator }) => {
           >
             Decline
           </Button>
-        </CardActions>
+        </CardActions> */}
       </DetailsWrapper>
     </section>
   );

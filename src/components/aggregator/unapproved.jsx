@@ -14,8 +14,11 @@ import TableCell from "@mui/material/TableCell";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
+import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const DetailsView = ({ aggregator }) => {
+  const router = useRouter();
   const [aggregators, setAggregators] = useState([]);
   const [value, setValue] = useState("Aggregator-details");
 
@@ -44,6 +47,43 @@ const DetailsView = ({ aggregator }) => {
     // Call the fetchData function
     fetchData();
   }, []);
+
+  const handleDecline = async () => {
+   
+
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.delete(`http://16.170.182.130:9898/nip/aggregator/${aggregator}`)
+      toast.success('Request Declined Successfully')
+      console.log("response", response)
+     
+    } catch (error) {
+      toast.error('Error Declining Request')
+      console.error('Error Declining Request', error)
+    }
+  }
+
+  const handleApprove = async () => {
+
+
+    const formData = {
+      "aggregator-id": aggregator,
+      "status": true,
+    
+    };
+    console.log(formData)
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.post("http://16.170.182.130:9898/nip/approve/aggregator", formData)
+      toast.success('Request Approved Successfully')
+      router.push("/dashboard/aggregators");
+      console.log(response)
+    
+    } catch (error) {
+      toast.error('Error Declining Request')
+      console.error('Error Declining Request', error)
+    }
+  }
 
   return (
     <section className={styles.dashboard}>
@@ -168,16 +208,34 @@ const DetailsView = ({ aggregator }) => {
             type="submit"
             sx={{ mr: 2, backgroundColor: "#71ace0", fontSize: "1.8rem" }}
             variant="contained"
+            onClick={e => {
+              e.preventDefault() // Add this line
+              if (window.confirm('Are you sure you want to Approve this request?')) {
+                handleApprove() // Pass the event object
+              } else {
+                // Handle the 'Cancel' case if needed
+              }
+            }}
           >
             Approve
           </Button>
 
           <Button
             type="submit"
-            sx={{ mr: 2, backgroundColor: "#BB2525", fontSize: "1.8rem" }}
+            sx={{ mr: 2, backgroundColor: "#BB2525", fontSize: "1.8rem",   "&:hover": {
+              backgroundColor: "#c63531",
+            }, }}
             variant="contained"
+            onClick={e => {
+              e.preventDefault() // Add this line
+              if (window.confirm('Are you sure you want to decline this request?')) {
+                handleDecline() // Pass the event object
+              } else {
+                // Handle the 'Cancel' case if needed
+              }
+            }}
           >
-            Decline
+            Deactivate
           </Button>
         </CardActions>
       </DetailsWrapper>

@@ -75,6 +75,8 @@ const Aggregator = () => {
         formData
       );
       toast.success(response.data.message);
+      fetchData()
+      fetchData2()
       console.log("Form submitted successfully", response.data);
     } catch (error) {
       toast.error(error.response.data.message);

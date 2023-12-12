@@ -14,6 +14,7 @@ import TableCell from "@mui/material/TableCell";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
+import { baseUrl } from "@/src/utility/constants";
 
 const DetailsView = ({ channel }) => {
   const [channels, setChannels] = useState([]);
@@ -29,7 +30,7 @@ const DetailsView = ({ channel }) => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          `http://16.170.182.130:9898/nip/channel/?status=unapproved&id=${channel}`
+          `${baseUrl}/channel/?status=unapproved&id=${channel}`
         );
 
         // Set the fetched data to the state

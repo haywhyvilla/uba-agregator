@@ -14,6 +14,7 @@ import Icon from "./icons";
 
 // ** Third Party Imports
 import { useDropzone } from "react-dropzone";
+import { baseUrl } from "@/src/utility/constants";
 
 const FileUploaderSingle = () => {
   const [files, setFiles] = useState([]);
@@ -28,7 +29,7 @@ const FileUploaderSingle = () => {
       try {
         // Replace with your actual API endpoint
         const response = await axios.post(
-          "http://16.170.182.130:9898/nip/timetable",
+          `${baseUrl}/timetable`,
           formData,
           {
             headers: {

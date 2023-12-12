@@ -16,6 +16,7 @@ import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { baseUrl } from "@/src/utility/constants";
 
 const DetailsView = ({ aggregator }) => {
   const router = useRouter();
@@ -32,7 +33,12 @@ const DetailsView = ({ aggregator }) => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          `http://16.170.182.130:9898/nip/aggregator?status=unapproved&id=${aggregator}`
+          `${baseUrl}/aggregator?status=unapproved&id=${aggregator}`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "http://localhost:3000",
+            },
+          }
         );
 
         // Set the fetched data to the state
@@ -53,7 +59,12 @@ const DetailsView = ({ aggregator }) => {
 
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.delete(`http://16.170.182.130:9898/nip/aggregator/${aggregator}`)
+      const response = await axios.delete(`${baseUrl}/aggregator/${aggregator}`,
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "http://localhost:3000",
+        },
+      })
       toast.success('Request Declined Successfully')
       console.log("response", response)
      
@@ -74,7 +85,11 @@ const DetailsView = ({ aggregator }) => {
     console.log(formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post("http://16.170.182.130:9898/nip/approve/aggregator", formData)
+      const response = await axios.post(`${baseUrl}/approve/aggregator`,  {
+        headers: {
+          "ngrok-skip-browser-warning": "http://localhost:3000",
+        },
+      },formData)
       toast.success('Request Approved Successfully')
       router.push("/dashboard/aggregators");
       console.log(response)

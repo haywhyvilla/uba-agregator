@@ -14,6 +14,7 @@ import TableCell from "@mui/material/TableCell";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
+import { baseUrl } from "@/src/utility/constants";
 
 const DetailsView = ({ aggregator }) => {
   const [aggregators, setAggregators] = useState([]);
@@ -29,7 +30,11 @@ const DetailsView = ({ aggregator }) => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          `http://16.170.182.130:9898/nip/aggregator?status=approved&id=${aggregator}`
+          `${baseUrl}aggregator?status=approved&id=${aggregator}`,  {
+            headers: {
+              "ngrok-skip-browser-warning": "http://localhost:3000",
+            },
+          }
         );
 
         // Set the fetched data to the state

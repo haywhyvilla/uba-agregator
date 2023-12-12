@@ -36,7 +36,7 @@ const menuItems = [
     pageUrl: "/dashboard/dataproducts",
   },
   {
-    label: "Disbursement Page",
+    label: "Switch Sequence",
     itemIcon: switchsequence,
     stepNumber: 4,
     pageUrl: "/dashboard/sequence",

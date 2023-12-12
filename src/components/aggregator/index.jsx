@@ -16,6 +16,7 @@ import CardContent from "@mui/material/CardContent";
 import { Button as AntdButton } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import PageHeader from "./pageHeader";
+import { baseUrl } from "@/src/utility/constants";
 
 const Aggregator = () => {
   const [aggregator, setAggregators] = useState([]);
@@ -27,7 +28,12 @@ const Aggregator = () => {
     try {
       // Make a GET request to the specified endpoint
       const response = await axios.get(
-        "http://16.170.182.130:9898/nip/aggregator?status=approved"
+        `${baseUrl}/aggregator?status=approved`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "http://localhost:3000",
+          },
+        }
       );
 
       // Set the fetched data to the state
@@ -42,7 +48,12 @@ const Aggregator = () => {
     try {
       // Make a GET request to the specified endpoint
       const response = await axios.get(
-        "http://16.170.182.130:9898/nip/aggregator?status=unapproved"
+        `${baseUrl}/aggregator?status=unapproved`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "http://localhost:3000",
+          },
+        }
       );
 
       // Set the fetched data to the state
@@ -71,7 +82,7 @@ const Aggregator = () => {
       // Make an HTTP POST request to your endpoint
 
       const response = await axios.post(
-        "http://16.170.182.130:9898/nip/aggregator",
+        `${baseUrl}/aggregator`,
         formData
       );
       toast.success(response.data.message);

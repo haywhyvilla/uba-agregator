@@ -6,6 +6,7 @@ import axios from "axios";
 import { Table, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { CSVLink } from 'react-csv';
+import { baseUrl } from "@/src/utility/constants";
 
 const DetailsView = ({ timetable }) => {
   const [data, setData] = useState([])
@@ -14,7 +15,7 @@ const DetailsView = ({ timetable }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://16.170.182.130:9898/nip/timetable?status=approved&id=${timetable}`
+          `${baseUrl}/timetable?status=approved&id=${timetable}`
         );
   
         console.log(response.data.data.timetable);
@@ -186,7 +187,7 @@ const DetailsView = ({ timetable }) => {
         border: 1px solid #000; /* Customize the body cell border */
       }
     `}</style>
-    <Table columns={columns} dataSource={data} bordered pagination={{ pageSize: 100 }} />
+    <Table columns={columns} dataSource={data} bordered pagination={{ pageSize: 24 }} />
   </section>
   );
 };

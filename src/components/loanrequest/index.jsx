@@ -11,6 +11,7 @@ import { channels } from "@/src/assets/channels.svg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 // import addIcon from "@/src/assets/addIcon.svg";
+import { baseUrl } from "@/src/utility/constants";
 
 const LoanRequest = () => {
   const [channels, setChannels] = useState([]);
@@ -23,7 +24,12 @@ const LoanRequest = () => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          "http://16.170.182.130:9898/nip/channel?status=unapproved"
+          `${baseUrl}/channel?status=unapproved`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "http://localhost:3000",
+            },
+          }
         );
 
         // Set the fetched data to the state
@@ -59,7 +65,11 @@ const LoanRequest = () => {
       // Make an HTTP POST request to your endpoint
 
       const response = await axios.post(
-        "http://16.170.182.130:9898/nip/channel",
+        `${baseUrl}/channel`,  {
+          headers: {
+            "ngrok-skip-browser-warning": "http://localhost:3000",
+          },
+        },
         formData
       );
       toast.success(response.data.message);

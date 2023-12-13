@@ -9,6 +9,7 @@ import timetable from "@/src/assets/timetable.svg";
 import styles from "@/src/components/multiStepDashboard/dashboard.module.scss";
 import Sidebar from "@/src/components/Sidebar";
 import DashboardHeader from "@/src/components/DashboardHeader";
+import Data from "@/src/assets/data.svg"
 
 const menuItems = [
   {
@@ -40,6 +41,12 @@ const menuItems = [
     itemIcon: switchsequence,
     stepNumber: 4,
     pageUrl: "/dashboard/sequence",
+  },
+  {
+    label: "Data Products",
+    itemIcon: Data,
+    stepNumber: 5,
+    pageUrl: "/dashboard/products",
   },
 ];
 

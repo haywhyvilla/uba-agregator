@@ -11,12 +11,12 @@ import axios from "axios";
 
 const Sequence = () => {
     const channels = [
-        'diaspora',
-        'facenote',
-        'internet-banking',
-        'ubanquity',
-        'ussd',
-        'vericash',
+        'File1',
+        'File2',
+        'File3',
+        'File4',
+        'File5',
+        'File6',
       ];
 
       const [selectedChannels, setSelectedChannels] = useState([]);
@@ -44,7 +44,7 @@ const Sequence = () => {
         try {
           // Use axios.post to send a POST request to the specified endpoint
           const response = await axios.post(
-            `${baseUrl}/sequence`,
+            `${baseUrl}/data-product`,
             selectedChannels,
             {
               headers: {
@@ -69,8 +69,8 @@ const Sequence = () => {
         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
 
         
-      <h1 style={{marginBottom: "2rem"}}>Select Channels to Upload</h1>
-      <Link href={`/dashboard/sequence/aggregatorSequence`}>
+      <h1 style={{marginBottom: "2rem"}}>Select Biller data-product to upload</h1>
+      <Link href={`/dashboard/products/dataProducts`}>
       <p
        style={{
          backgroundColor: '#f50606',
@@ -83,7 +83,7 @@ const Sequence = () => {
           marginBottom: "3rem"
        }}
      >
-       Aggregator sequence details
+       Data Products details
      </p>
       </Link>
       

@@ -18,7 +18,7 @@ const SignIn = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://4036-129-205-113-174.ngrok-free.app/auth",
+        "https://a1f4-102-89-22-90.ngrok-free.app/auth",
         {
           headers: {
             "ngrok-skip-browser-warning": "http://localhost:3000",

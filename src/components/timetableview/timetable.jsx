@@ -7,15 +7,25 @@ import { Table, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { CSVLink } from 'react-csv';
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const DetailsView = ({ timetable }) => {
   const [data, setData] = useState([])
+  const { user } = useAuth();
+const storedToken = user.token
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/timetable?status=approved&id=${timetable}`
+          `${baseUrl}/timetable?status=approved&id=${timetable}`,
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+              'Content-Type': 'application/json',
+              "ngrok-skip-browser-warning": "http://localhost:3000",
+            }
+          }
         );
   
         console.log(response.data.data.timetable);

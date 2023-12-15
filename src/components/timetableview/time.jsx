@@ -11,6 +11,7 @@ import PageHeader from "../aggregator/pageHeader";
 import { Dropdown, Space, Modal, Form, Spin, Input } from "antd";
 import Button from "@mui/material/Button";
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 
 
@@ -18,6 +19,8 @@ const Timetable = () => {
 
       const [files, setFiles] = useState([]);
     const [unApproved, setUnApproved] = useState([])
+    const { user } = useAuth();
+    const storedToken = user.token
 
     const fetchData = async () => {
         try {
@@ -26,8 +29,10 @@ const Timetable = () => {
             `${baseUrl}/timetable?status=unapproved`,
             {
                 headers: {
-                  "ngrok-skip-browser-warning": "http://localhost:3000",
-                },
+                    Authorization: `Bearer ${storedToken}`,
+                    'Content-Type': 'application/json',
+                    "ngrok-skip-browser-warning": "http://localhost:3000",
+                  }
               }
           );
     
@@ -46,8 +51,10 @@ const Timetable = () => {
             `${baseUrl}/timetable?status=unapproved`,
             {
                 headers: {
-                  "ngrok-skip-browser-warning": "http://localhost:3000",
-                },
+                    Authorization: `Bearer ${storedToken}`,
+                    'Content-Type': 'application/json',
+                    "ngrok-skip-browser-warning": "http://localhost:3000",
+                  }
               }
           );
     

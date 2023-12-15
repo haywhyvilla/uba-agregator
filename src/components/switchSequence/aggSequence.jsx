@@ -10,9 +10,12 @@ import { channels } from "@/src/assets/channels.svg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const SequenceData = () => {
   const [channels, setChannels] = useState([]);
+  const { user } = useAuth();
+  const storedToken = user.token
   useEffect(() => {
     // Function to fetch data
     const fetchData = async () => {
@@ -22,8 +25,10 @@ const SequenceData = () => {
           `${baseUrl}/sequence?status=unapproved`,
           {
             headers: {
-              "ngrok-skip-browser-warning": "http://localhost:3000",
-            },
+                Authorization: `Bearer ${storedToken}`,
+                'Content-Type': 'application/json',
+                "ngrok-skip-browser-warning": "http://localhost:3000",
+              }
           }
         );
 

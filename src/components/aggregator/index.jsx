@@ -17,12 +17,15 @@ import { Button as AntdButton } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import PageHeader from "./pageHeader";
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const Aggregator = () => {
   const [aggregator, setAggregators] = useState([]);
   const [unApproved, setUnApproved] = useState([])
   const [submitLoading, setSubmitLoading] = useState(false);
   const [aggregatorsModal, setAggregatorsModal] = useState(false);
+  const { user } = useAuth();
+  const storedToken = user.token
 
   const fetchData = async () => {
     try {
@@ -31,8 +34,10 @@ const Aggregator = () => {
         `${baseUrl}/aggregator?status=approved`,
         {
           headers: {
+            Authorization: `Bearer ${storedToken}`,
+            'Content-Type': 'application/json',
             "ngrok-skip-browser-warning": "http://localhost:3000",
-          },
+          }
         }
       );
 
@@ -51,8 +56,10 @@ const Aggregator = () => {
         `${baseUrl}/aggregator?status=unapproved`,
         {
           headers: {
+            Authorization: `Bearer ${storedToken}`,
+            'Content-Type': 'application/json',
             "ngrok-skip-browser-warning": "http://localhost:3000",
-          },
+          }
         }
       );
 
@@ -83,7 +90,14 @@ const Aggregator = () => {
 
       const response = await axios.post(
         `${baseUrl}/aggregator`,
-        formData
+        formData,{
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+            'Content-Type': 'application/json',
+            "ngrok-skip-browser-warning": "http://localhost:3000",
+          }
+        }
+       
       );
       toast.success(response.data.message);
       fetchData()

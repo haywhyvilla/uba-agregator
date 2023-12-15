@@ -12,12 +12,15 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 // import addIcon from "@/src/assets/addIcon.svg";
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const LoanRequest = () => {
   const [channels, setChannels] = useState([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [channelsModal, setChannelsModal] = useState(false);
-
+  const { user } = useAuth();
+const storedToken = user.token
+console.log(storedToken)
   useEffect(() => {
     // Function to fetch data
     const fetchData = async () => {
@@ -27,8 +30,10 @@ const LoanRequest = () => {
           `${baseUrl}/channel?status=unapproved`,
           {
             headers: {
+              Authorization: `Bearer ${storedToken}`,
+              'Content-Type': 'application/json',
               "ngrok-skip-browser-warning": "http://localhost:3000",
-            },
+            }
           }
         );
 

@@ -17,11 +17,14 @@ import Divider from "@mui/material/Divider";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const DetailsView = ({ aggregator }) => {
   const router = useRouter();
   const [aggregators, setAggregators] = useState([]);
   const [value, setValue] = useState("Aggregator-details");
+  const { user } = useAuth();
+  const storedToken = user.token
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
@@ -36,8 +39,10 @@ const DetailsView = ({ aggregator }) => {
           `${baseUrl}/aggregator?status=unapproved&id=${aggregator}`,
           {
             headers: {
+              Authorization: `Bearer ${storedToken}`,
+              'Content-Type': 'application/json',
               "ngrok-skip-browser-warning": "http://localhost:3000",
-            },
+            }
           }
         );
 
@@ -62,8 +67,10 @@ const DetailsView = ({ aggregator }) => {
       const response = await axios.delete(`${baseUrl}/aggregator/${aggregator}`,
       {
         headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
           "ngrok-skip-browser-warning": "http://localhost:3000",
-        },
+        }
       })
       toast.success('Request Declined Successfully')
       console.log("response", response)

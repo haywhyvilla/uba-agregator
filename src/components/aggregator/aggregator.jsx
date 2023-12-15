@@ -15,10 +15,14 @@ import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const DetailsView = ({ aggregator }) => {
   const [aggregators, setAggregators] = useState([]);
   const [value, setValue] = useState("Aggregator-details");
+  const { user } = useAuth();
+  const storedToken = user.token
+
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
@@ -32,8 +36,10 @@ const DetailsView = ({ aggregator }) => {
         const response = await axios.get(
           `${baseUrl}aggregator?status=approved&id=${aggregator}`,  {
             headers: {
+              Authorization: `Bearer ${storedToken}`,
+              'Content-Type': 'application/json',
               "ngrok-skip-browser-warning": "http://localhost:3000",
-            },
+            }
           }
         );
 

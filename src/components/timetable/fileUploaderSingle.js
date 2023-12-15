@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { useAuth } from "@/src/context/AppContext";
 
 // ** Icon Imports
 import Icon from "./icons";
@@ -18,6 +19,8 @@ import { baseUrl } from "@/src/utility/constants";
 
 const FileUploaderSingle = () => {
   const [files, setFiles] = useState([]);
+  const { user } = useAuth();
+  const storedToken = user.token
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -33,8 +36,10 @@ const FileUploaderSingle = () => {
           formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-            },
+              Authorization: `Bearer ${storedToken}`,
+              'Content-Type': 'application/json',
+              "ngrok-skip-browser-warning": "http://localhost:3000",
+            }
           }
         );
 

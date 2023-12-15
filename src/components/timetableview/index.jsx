@@ -13,8 +13,11 @@ import { Table, Input, Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { CSVLink } from 'react-csv';
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const Timetable = () => {
+  const { user } = useAuth();
+  const storedToken = user.token
     // const [files, setFiles] = useState([]);
     // const [unApproved, setUnApproved] = useState([])
 
@@ -62,8 +65,10 @@ const Timetable = () => {
             `${baseUrl}/timetable?status=approved`,
             {
               headers: {
+                Authorization: `Bearer ${storedToken}`,
+                'Content-Type': 'application/json',
                 "ngrok-skip-browser-warning": "http://localhost:3000",
-              },
+              }
             }
           );
     

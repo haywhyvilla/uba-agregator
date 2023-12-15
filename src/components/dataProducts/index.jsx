@@ -7,6 +7,7 @@ import { Flex } from "antd";
 import { baseUrl } from "@/src/utility/constants";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { useAuth } from "@/src/context/AppContext";
 
 
 const Sequence = () => {
@@ -20,6 +21,8 @@ const Sequence = () => {
       ];
 
       const [selectedChannels, setSelectedChannels] = useState([]);
+      const { user } = useAuth();
+      const storedToken = user.token
 
       const handleChannelChange = (channel) => {
         const updatedChannels = selectedChannels.includes(channel)
@@ -48,9 +51,10 @@ const Sequence = () => {
             selectedChannels,
             {
               headers: {
-                'Content-Type': 'multipart/form-data', 
-                // Add any other headers you need
-              },
+                Authorization: `Bearer ${storedToken}`,
+                'Content-Type': 'application/json',
+                "ngrok-skip-browser-warning": "http://localhost:3000",
+              }
             }
           );
     

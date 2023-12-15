@@ -15,10 +15,13 @@ import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import { baseUrl } from "@/src/utility/constants";
+import { useAuth } from "@/src/context/AppContext";
 
 const DetailsView = ({ channel }) => {
   const [channels, setChannels] = useState([]);
   const [value, setValue] = useState("Channels-details");
+  const { user } = useAuth();
+  const storedToken = user.token
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
@@ -30,7 +33,14 @@ const DetailsView = ({ channel }) => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          `${baseUrl}/channel/?status=unapproved&id=${channel}`
+          `${baseUrl}/channel/?status=unapproved&id=${channel}`,
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+              'Content-Type': 'application/json',
+              "ngrok-skip-browser-warning": "http://localhost:3000",
+            }
+          }
         );
 
         // Set the fetched data to the state

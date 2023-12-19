@@ -94,8 +94,10 @@ const DetailsView = ({ aggregator }) => {
       // Make an HTTP POST request to your endpoint
       const response = await axios.post(`${baseUrl}/approve/aggregator`,  {
         headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
           "ngrok-skip-browser-warning": "http://localhost:3000",
-        },
+        }
       },formData)
       toast.success('Request Approved Successfully')
       router.push("/dashboard/aggregators");

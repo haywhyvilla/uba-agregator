@@ -17,7 +17,7 @@ const Sidebar = ({
     <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}>
       <div className={styles.fixed}>
         <div className={styles.logo}>
-          <Link href="/">
+          <Link href="/dashboard">
             <Image src={abLogo} alt="Uba logo" width="120" height="80" />
           </Link>
         </div>

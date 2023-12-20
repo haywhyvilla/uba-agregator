@@ -16,12 +16,19 @@ import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const DetailsView = ({ channel }) => {
+  const router = useRouter();
   const [channels, setChannels] = useState([]);
   const [value, setValue] = useState("Channels-details");
   const { user } = useAuth();
-  const storedToken = user.token
+  const storedToken = user?.token
+  if (storedToken === undefined) {
+    router.push("/")
+  } else {
+    console.log("we are good")
+  }
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);

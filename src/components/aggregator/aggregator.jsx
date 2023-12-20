@@ -16,12 +16,19 @@ import CardActions from "@mui/material/CardActions";
 import Divider from "@mui/material/Divider";
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const DetailsView = ({ aggregator }) => {
+  const router = useRouter();
   const [aggregators, setAggregators] = useState([]);
   const [value, setValue] = useState("Aggregator-details");
   const { user } = useAuth();
-  const storedToken = user.token
+  const storedToken = user?.token
+  if (storedToken === undefined) {
+    router.push("/")
+  } else {
+    console.log("we are good")
+  }
 
 
   const handleTabsChange = (event, newValue) => {

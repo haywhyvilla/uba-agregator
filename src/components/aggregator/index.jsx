@@ -18,14 +18,21 @@ import { ToastContainer, toast } from "react-toastify";
 import PageHeader from "./pageHeader";
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const Aggregator = () => {
+  const router = useRouter();
   const [aggregator, setAggregators] = useState([]);
   const [unApproved, setUnApproved] = useState([])
   const [submitLoading, setSubmitLoading] = useState(false);
   const [aggregatorsModal, setAggregatorsModal] = useState(false);
   const { user } = useAuth();
-  const storedToken = user.token
+  const storedToken = user?.token
+  if (storedToken === undefined) {
+    router.push("/")
+  } else {
+    console.log("we are good")
+  }
 
   const fetchData = async () => {
     try {

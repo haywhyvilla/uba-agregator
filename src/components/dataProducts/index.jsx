@@ -27,6 +27,7 @@ import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
 import { DropzoneArea } from 'material-ui-dropzone'
 import { ExcelRenderer } from 'react-excel-renderer'
+import { useRouter } from "next/navigation";
 
 import Button from '@mui/material/Button'
 
@@ -108,7 +109,12 @@ const Sequence = () => {
   const [isButtonDisabled, setButtonDisabled] = useState(false)
   const [excelData, setExcelData] = useState([])
   const { user } = useAuth();
-  const storedToken = user.token
+  const storedToken = user?.token
+  if (storedToken === undefined) {
+    router.push("/")
+  } else {
+    console.log("we are good")
+  }
 
 
   const handleExcelFile = file => {
@@ -258,6 +264,22 @@ const Sequence = () => {
 
     return (
         <div style={{padding: "5rem"}}>
+            <Link href={`/dashboard/products/dataProducts`}>
+      <p
+       style={{
+         backgroundColor: '#f50606',
+         color: '#ffffff',
+         padding: '10px 15px',
+         borderRadius: '5px',
+         cursor: 'pointer',
+         display: 'inline-block',
+         float: 'left',
+          marginBottom: "3rem"
+       }}
+     >
+       Data Products details
+     </p>
+      </Link>
        <div
                             style={{
                               display: 'flex',

@@ -8,11 +8,18 @@ import { SearchOutlined } from '@ant-design/icons';
 import { CSVLink } from 'react-csv';
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const DetailsView = ({ timetable }) => {
+  const router = useRouter();
   const [data, setData] = useState([])
   const { user } = useAuth();
-const storedToken = user.token
+const storedToken = user?.token
+if (storedToken === undefined) {
+  router.push("/")
+} else {
+  console.log("we are good")
+}
 
   useEffect(() => {
     const fetchData = async () => {

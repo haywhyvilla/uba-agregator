@@ -13,13 +13,20 @@ import { ToastContainer, toast } from "react-toastify";
 // import addIcon from "@/src/assets/addIcon.svg";
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const LoanRequest = () => {
+  const router = useRouter();
   const [channels, setChannels] = useState([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [channelsModal, setChannelsModal] = useState(false);
   const { user } = useAuth();
-const storedToken = user.token
+const storedToken = user?.token
+if (storedToken === undefined) {
+  router.push("/")
+} else {
+  console.log("we are good")
+}
 console.log(storedToken)
   useEffect(() => {
     // Function to fetch data

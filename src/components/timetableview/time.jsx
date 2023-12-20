@@ -12,15 +12,21 @@ import { Dropdown, Space, Modal, Form, Spin, Input } from "antd";
 import Button from "@mui/material/Button";
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 
 
 const Timetable = () => {
-
+  const router = useRouter();
       const [files, setFiles] = useState([]);
     const [unApproved, setUnApproved] = useState([])
     const { user } = useAuth();
-    const storedToken = user.token
+    const storedToken = user?.token
+    if (storedToken === undefined) {
+      router.push("/")
+    } else {
+      console.log("we are good")
+    }
 
     const fetchData = async () => {
         try {

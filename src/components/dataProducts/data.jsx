@@ -11,11 +11,18 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const SequenceData = () => {
+  const router = useRouter();
   const [channels, setChannels] = useState([]);
   const { user } = useAuth();
-  const storedToken = user.token
+  const storedToken = user?.token
+  if (storedToken === undefined) {
+    router.push("/")
+  } else {
+    console.log("we are good")
+  }
   useEffect(() => {
     // Function to fetch data
     const fetchData = async () => {

@@ -41,7 +41,7 @@ const DetailsView = ({ aggregator }) => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          `${baseUrl}aggregator?status=approved&id=${aggregator}`,  {
+          `${baseUrl}/aggregator?status=approved&id=${aggregator}`,  {
             headers: {
               Authorization: `Bearer ${storedToken}`,
               'Content-Type': 'application/json',

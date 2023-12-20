@@ -48,6 +48,12 @@ const menuItems = [
     stepNumber: 5,
     pageUrl: "/dashboard/products",
   },
+  {
+    label: "Aggregator Response Map",
+    itemIcon:  channels,
+    stepNumber: 6,
+    pageUrl: "/dashboard/responseMap",
+  },
 ];
 
 export default function RootLayout({ children }) {

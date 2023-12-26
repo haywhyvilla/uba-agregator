@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     // Implement your login logic using axios or any other method
     try {
       // Your login API call here
-      const response = await axios.post('https://03d5-102-88-37-74.ngrok-free.app/auth', values);
+      const response = await axios.post('https://382a-129-205-113-182.ngrok-free.app/auth', values);
       setUser(response.data);
       setToken(response.data.token)
       setStatus(response.data.status.type)

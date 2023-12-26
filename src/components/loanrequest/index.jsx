@@ -1,5 +1,6 @@
 "use client";
 
+
 import styles from "./loanrequest.module.scss";
 import addIcon from "@/src/assets/addIcon2.svg";
 import Image from "next/image";

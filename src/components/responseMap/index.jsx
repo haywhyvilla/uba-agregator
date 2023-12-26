@@ -99,6 +99,7 @@ const StyledTableContainer = styled(TableContainer)`
 
 
 const Sequence = () => {
+  const router = useRouter();
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [filePreview, setFilePreview] = useState(null)
@@ -225,7 +226,7 @@ const Sequence = () => {
 
     // You can access form values from the state (values, months, etc.)
     const formData = {
-      test: fileDataa
+      file: fileDataa
     }
 
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
@@ -234,7 +235,7 @@ const Sequence = () => {
 
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${baseUrl}/data-product`, formData, {
+      const response = await axios.post(`${baseUrl}/aggregator-map`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'multipart/form-data',
@@ -244,7 +245,7 @@ const Sequence = () => {
 
       // Handle the response as needed
       toast.success(response.data.message)
-      console.log('Form submitted successfully', response.data)
+      console.log('Form submitted successfully', response)
 
     } catch (error) {
       // Handle errors
@@ -264,7 +265,7 @@ const Sequence = () => {
 
     return (
         <div style={{padding: "5rem"}}>
-            <Link href={`/dashboard/products/dataProducts`}>
+            <Link href={`/dashboard/responseMap/dataProducts`}>
       <p
        style={{
          backgroundColor: '#f50606',

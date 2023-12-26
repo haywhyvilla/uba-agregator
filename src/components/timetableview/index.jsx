@@ -14,10 +14,17 @@ import { SearchOutlined } from '@ant-design/icons';
 import { CSVLink } from 'react-csv';
 import { baseUrl } from "@/src/utility/constants";
 import { useAuth } from "@/src/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const Timetable = () => {
+  const router = useRouter();
   const { user } = useAuth();
-  const storedToken = user.token
+  const storedToken = user?.token
+  if (storedToken === undefined) {
+    router.push("/")
+  } else {
+    console.log("we are good")
+  }
     // const [files, setFiles] = useState([]);
     // const [unApproved, setUnApproved] = useState([])
 

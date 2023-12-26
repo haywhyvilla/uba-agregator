@@ -29,7 +29,7 @@ const SequenceData = () => {
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
-          `${baseUrl}/data-product?status=unapproved`,
+          `${baseUrl}/aggregator-map?status=unapproved`,
           {
             headers: {
                 Authorization: `Bearer ${storedToken}`,

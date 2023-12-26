@@ -57,7 +57,7 @@ const SequenceData = () => {
 
   const generateViewsContent = (record) => (
     <div className={styles.viewBtn}>
-      <Link href={`/dashboard/${record["change-id"]}`}>
+      <Link href={`/dashboard/sequence/aggregatorSequence/${record["document-id"]}`}>
         <button style={{ cursor: "pointer" }}>View details</button>
       </Link>
     </div>
@@ -106,7 +106,7 @@ const SequenceData = () => {
   ];
 
   const handleRowClick = (record) => {
-    router.push(`/dashboard/${record["change-id"]}`);
+    router.push(`/dashboard/sequence/aggregatorSequence/${record["document-id"]}`);
   };
 
   const rowProps = (record) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Sequence from "@/src/components/dataProducts";
+import Sequence from "@/src/components/responseMap";
 
 const Dashboard = () => {
   return (

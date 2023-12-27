@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DetailsView from "@/src/components/dataProducts/approve";
+import DetailsView from "@/src/components/responseMap/approve";
 
 const VendorsDetails = ({ params }) => {
   const channel = params.channel;

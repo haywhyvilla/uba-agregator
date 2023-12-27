@@ -62,6 +62,56 @@ const DetailsView = ({ channel }) => {
     fetchData();
   }, []);
 
+  const handleApprove = async () => {
+
+
+    const formData = {
+      "channel-id": channel,
+      "status": true,
+    
+    };
+    console.log(formData)
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.post(`${baseUrl}/approve/channel`, formData, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000",
+        }
+      })
+      toast.success('Request Approved Successfully')
+      router.push("/dashboard");
+      console.log(response)
+    
+    } catch (error) {
+      toast.error('Error Approving Request')
+      console.error('Error Approving Request', error)
+    }
+  }
+
+  const handleDecline = async () => {
+   
+
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.delete(`${baseUrl}/channel/${channel}`,
+      {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000",
+        }
+      })
+      toast.success('Request Declined Successfully')
+      console.log("response", response)
+     
+    } catch (error) {
+      toast.error('Error Declining Request')
+      console.error('Error Declining Request', error)
+    }
+  }
+
   return (
     <section className={styles.dashboard}>
       <DetailsWrapper>
@@ -302,14 +352,32 @@ const DetailsView = ({ channel }) => {
             type="submit"
             sx={{ mr: 2, backgroundColor: "#71ace0", fontSize: "1.8rem" }}
             variant="contained"
+            onClick={e => {
+              e.preventDefault() // Add this line
+              if (window.confirm('Are you sure you want to Approve this request?')) {
+                handleApprove() // Pass the event object
+              } else {
+                // Handle the 'Cancel' case if needed
+              }
+            }}
           >
             Approve
           </Button>
 
           <Button
             type="submit"
-            sx={{ mr: 2, backgroundColor: "#BB2525", fontSize: "1.8rem" }}
+            sx={{ mr: 2, backgroundColor: "#BB2525", fontSize: "1.8rem",   "&:hover": {
+              backgroundColor: "#c63531",
+            }, }}
             variant="contained"
+            onClick={e => {
+              e.preventDefault() // Add this line
+              if (window.confirm('Are you sure you want to decline this request?')) {
+                handleDecline() // Pass the event object
+              } else {
+                // Handle the 'Cancel' case if needed
+              }
+            }}
           >
             Decline
           </Button>
@@ -320,3 +388,5 @@ const DetailsView = ({ channel }) => {
 };
 
 export default DetailsView;
+
+// madame_mystiquee

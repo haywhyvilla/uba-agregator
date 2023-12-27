@@ -20,6 +20,11 @@ export const AuthProvider = ({ children }) => {
       setToken(response.data.token)
       setStatus(response.data.status.type)
       console.log(response.data.status.type)
+      if(response.data.status.type == "SUCC"){
+        router.push("/dashboard");
+    } else {
+        setError('Login failed. Please check your credentials and try again.');
+    }
     } catch (error) {
       // Handle login error
       console.error('Login failed:', error);

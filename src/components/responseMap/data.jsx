@@ -57,7 +57,7 @@ const SequenceData = () => {
 
   const generateViewsContent = (record) => (
     <div className={styles.viewBtn}>
-      <Link href={`/dashboard/${record["change-id"]}`}>
+      <Link href={`/dashboard/responseMap/dataProducts/${record["document-id"]}`}>
         <button style={{ cursor: "pointer" }}>View details</button>
       </Link>
     </div>
@@ -65,30 +65,31 @@ const SequenceData = () => {
 
   const columns = [
     {
-        title: "country-code",
-        dataIndex: "country-code",
-        key: "country-code",
+        title: "Aggregator",
+        dataIndex: "aggregator",
+        key: "aggregator",
       },
       {
-        title: "biller-id",
-        dataIndex: "biller-id",
-        key: "biller-id",
+        title: "Client-resp-code",
+        dataIndex: "client-resp-code",
+        key: "client-resp-code",
       },
     {
-      title: "product-type-name",
-      dataIndex: "product-type-name",
-      key: "product-type-name",
+      title: "Entered-by",
+      dataIndex: "entered-by",
+      key: "entered-by",
     },
     {
-        title: "price-type",
-        dataIndex: "price-type",
-        key: "price-type",
+        title: "Resp-source",
+        dataIndex: "resp-source",
+        key: "resp-source",
       },
     
+
     {
-      title: "price-type-name",
-      dataIndex: "price-type-name",
-      key: "price-type-name",
+      title: "Resp-desc",
+      dataIndex: "resp-desc",
+      key: "resp-desc",
     },
 
     // {
@@ -97,27 +98,27 @@ const SequenceData = () => {
     //   key: "exec-seq",
     // },
 
-    {
-        title: "biller-name",
-        dataIndex: "biller-name",
-        key: "biller-name",
-      },
-    {
-      title: "amount",
-      dataIndex: "amount",
-      key: "amount",
-    },
+    // {
+    //     title: "biller-name",
+    //     dataIndex: "biller-name",
+    //     key: "biller-name",
+    //   },
+    // {
+    //   title: "amount",
+    //   dataIndex: "amount",
+    //   key: "amount",
+    // },
 
-//     {
-//       title: "Action",
-//       dataIndex: "action",
-//       key: "action",
-//       render: (_, record) => generateViewsContent(record),
-//     },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_, record) => generateViewsContent(record),
+    },
   ];
 
   const handleRowClick = (record) => {
-    router.push(`/dashboard/${record["change-id"]}`);
+    router.push(`/dashboard/responseMap/dataProducts/${record["document-id"]}`);
   };
 
   const rowProps = (record) => {

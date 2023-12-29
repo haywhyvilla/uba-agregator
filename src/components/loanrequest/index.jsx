@@ -25,6 +25,8 @@ const LoanRequest = () => {
   const [channelsModal, setChannelsModal] = useState(false);
   const { user } = useAuth();
 const storedToken = user?.token
+const roleUSer = user?.details?.role
+console.log("7565424", roleUSer)
 if (storedToken === undefined) {
   router.push("/")
 } else {
@@ -111,41 +113,51 @@ console.log(storedToken)
     </div>
   );
 
-  const columns = [
-    {
-      title: "Code",
-      dataIndex: "appl-code",
-      key: "appl-code",
-    },
-    {
-      title: "Name",
-      dataIndex: "appl-name",
-      key: "appl-name",
-    },
-    {
-      title: "Date",
-      dataIndex: "entry-date",
-      key: "entry-date",
-    },
+  
 
-    {
-      title: "failure-threshold",
-      dataIndex: "failure-threshold",
-      key: "failure-threshold",
-    },
-    {
-      title: "minutes",
-      dataIndex: "minutes",
-      key: "minutes",
-    },
+// Define the base columns
+const baseColumns = [
+  {
+    title: "Code",
+    dataIndex: "appl-code",
+    key: "appl-code",
+  },
+  {
+    title: "Name",
+    dataIndex: "appl-name",
+    key: "appl-name",
+  },
+  {
+    title: "Date",
+    dataIndex: "entry-date",
+    key: "entry-date",
+  },
+  {
+    title: "failure-threshold",
+    dataIndex: "failure-threshold",
+    key: "failure-threshold",
+  },
+  {
+    title: "minutes",
+    dataIndex: "minutes",
+    key: "minutes",
+  },
+];
 
-    {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
-      render: (_, record) => generateViewsContent(record),
-    },
-  ];
+// Conditionally add the "Action" column based on roleUser
+if (roleUSer === "APPROVER" || roleUSer === "ADMIN") {
+  baseColumns.push({
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+    render: (_, record) => generateViewsContent(record),
+  });
+}
+
+const columns = [...baseColumns];
+
+// Rest of your component code...
+
 
   const handleRowClick = (record) => {
     router.push(`/dashboard/${record["change-id"]}`);
@@ -162,13 +174,17 @@ console.log(storedToken)
       <div className={styles.tableSection}>
         <Table columns={columns} dataSource={channels} onRow={rowProps} />
       </div>
-      <Image
+      {
+        (roleUSer === "INITIATOR" || roleUSer === "ADMIN") &&
+        <Image
         src={addIcon}
         width={100}
         height={100}
         className={styles.addIcon}
         onClick={handleAddVendorClick}
       />
+      }
+     
       <Modal
         centered
         open={channelsModal}

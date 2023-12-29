@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 import { NULL } from 'sass';
+import { useRouter } from "next/navigation";
 
 const AuthContext = createContext();
 
@@ -10,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null)
   const [status, setStatus] = useState(null)
+  const router = useRouter();
 
   const login = async (values) => {
     // Implement your login logic using axios or any other method
@@ -19,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       setUser(response.data);
       setToken(response.data.token)
       setStatus(response.data.status.type)
-      console.log(response.data.status.type)
+      console.log(response.data.details.role)
       if(response.data.status.type == "SUCC"){
         router.push("/dashboard");
     } else {

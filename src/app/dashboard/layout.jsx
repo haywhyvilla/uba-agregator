@@ -10,8 +10,18 @@ import styles from "@/src/components/multiStepDashboard/dashboard.module.scss";
 import Sidebar from "@/src/components/Sidebar";
 import DashboardHeader from "@/src/components/DashboardHeader";
 import Data from "@/src/assets/data.svg"
+import { useAuth } from "@/src/context/AppContext";
 
-const menuItems = [
+
+
+export default function RootLayout({ children }) {
+  const [selectedStepLabel, setSelectedStepLabel] = useState("Channel");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [step, setStep] = useState(0);
+  const { user } = useAuth();
+  const roleUSer = user?.details?.role
+
+const baseMenuItems = [
   {
     label: "Channels",
     itemIcon: channels,
@@ -24,12 +34,7 @@ const menuItems = [
     stepNumber: 1,
     pageUrl: "/dashboard/aggregators",
   },
-  {
-    label: "Time Table Upload",
-    itemIcon: timetable,
-    stepNumber: 2,
-    pageUrl: "/dashboard/timetable",
-  },
+  
   {
     label: "Time Tables",
     itemIcon: dataproducts,
@@ -54,12 +59,18 @@ const menuItems = [
     stepNumber: 6,
     pageUrl: "/dashboard/responseMap",
   },
-];
+]
 
-export default function RootLayout({ children }) {
-  const [selectedStepLabel, setSelectedStepLabel] = useState("Channel");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [step, setStep] = useState(0);
+if (roleUSer === "INITIATOR" || roleUSer === "ADMIN") {
+  baseMenuItems.splice(2, 0, {
+    label: "Time Table Upload",
+    itemIcon: timetable,
+    stepNumber: 2,
+    pageUrl: "/dashboard/timetable",
+  });
+}
+
+  const menuItems = [...baseMenuItems];
 
   const handleMenuItemClick = (stepNumber, stepLabel) => {
     setStep(stepNumber);

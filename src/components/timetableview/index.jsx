@@ -20,6 +20,7 @@ const Timetable = () => {
   const router = useRouter();
   const { user } = useAuth();
   const storedToken = user?.token
+  const roleUSer = user?.details?.role
   if (storedToken === undefined) {
     router.push("/")
   } else {
@@ -316,22 +317,27 @@ const Timetable = () => {
 
 <section className={styles.dashboard} style={{ overflowX: "scroll", paddingRight: "5rem" }}>
 <div style={{ marginBottom: 16 }}>
-  <Link href={`/dashboard/dataproducts/time`}>
-<p
-       style={{
-         backgroundColor: '#f50606',
-         color: '#ffffff',
-         padding: '10px 15px',
-         borderRadius: '5px',
-         cursor: 'pointer',
-         display: 'inline-block',
-         float: 'left',
-          marginBottom: "3rem"
-       }}
-     >
-       Click to approve Upload
-     </p>
-     </Link>
+
+  {
+     (roleUSer === "APPROVER" || roleUSer === "ADMIN") &&   
+     <Link href={`/dashboard/dataproducts/time`}>
+     <p
+            style={{
+              backgroundColor: '#f50606',
+              color: '#ffffff',
+              padding: '10px 15px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              display: 'inline-block',
+              float: 'left',
+               marginBottom: "3rem"
+            }}
+          >
+            Click to approve Upload
+          </p>
+          </Link>
+  }
+
 <CSVLink
  data={data}
  filename={`timetable.csv`}

@@ -28,6 +28,7 @@ const Aggregator = () => {
   const [aggregatorsModal, setAggregatorsModal] = useState(false);
   const { user } = useAuth();
   const storedToken = user?.token
+  const roleUSer = user?.details?.role
   if (storedToken === undefined) {
     router.push("/")
   } else {
@@ -147,7 +148,9 @@ const Aggregator = () => {
                 by: {item["created-by"]}
               </Typography>
             </CardContent>
-            <Link href={`/dashboard/aggregators/${item["change-id"]}`}>
+
+            {
+              (roleUSer === "APPROVER" || roleUSer === "ADMIN") &&  <Link href={`/dashboard/aggregators/${item["change-id"]}`}>
               <Button
                 variant="contained"
                 sx={{
@@ -166,11 +169,15 @@ const Aggregator = () => {
                 Veiw
               </Button>
             </Link>
+            }
+           
           </Card>
         ))}
       </div>
 
-      <PageHeader
+{
+  (roleUSer === "APPROVER" || roleUSer === "ADMIN") && <>
+  <PageHeader
             title={
               <Typography variant='h4' sx={{ mb: 2, mt: 3, fontSize: "2.6rem", }}>
                UnApproved Aggregator
@@ -226,14 +233,20 @@ const Aggregator = () => {
           </Card>
         ))}
       </div>
+  </>
+}
+    
 
-      <Image
+{
+        (roleUSer === "INITIATOR" || roleUSer === "ADMIN") &&
+        <Image
         src={addIcon}
         width={100}
         height={100}
         className={styles.addIcon}
         onClick={handleAddVendorClick}
       />
+      }
 
       <Modal
         centered

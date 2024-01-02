@@ -18,6 +18,7 @@ const SequenceData = () => {
   const [channels, setChannels] = useState([]);
   const { user } = useAuth();
   const storedToken = user?.token
+  const roleUSer = user?.details?.role
   if (storedToken === undefined) {
     router.push("/")
   } else {
@@ -63,47 +64,53 @@ const SequenceData = () => {
     </div>
   );
 
-  const columns = [
+  const baseColumns = [
     {
-        title: "S/N",
-        dataIndex: "sno",
-        key: "sno",
-      },
-      {
-        title: "Aggr-Code",
-        dataIndex: "aggr-code",
-        key: "aggr-code",
-      },
-    {
-      title: "Code",
-      dataIndex: "appl-code",
-      key: "appl-code",
+      title: "S/N",
+      dataIndex: "sno",
+      key: "sno",
     },
-    
     {
-      title: "Date",
-      dataIndex: "entry-date",
-      key: "entry-date",
+      title: "Aggr-Code",
+      dataIndex: "aggr-code",
+      key: "aggr-code",
     },
+  {
+    title: "Code",
+    dataIndex: "appl-code",
+    key: "appl-code",
+  },
+  
+  {
+    title: "Date",
+    dataIndex: "entry-date",
+    key: "entry-date",
+  },
 
-    {
-      title: "exec-seq",
-      dataIndex: "exec-seq",
-      key: "exec-seq",
-    },
-    {
-      title: "entered-by",
-      dataIndex: "entered-by",
-      key: "entered-by",
-    },
+  {
+    title: "exec-seq",
+    dataIndex: "exec-seq",
+    key: "exec-seq",
+  },
+  {
+    title: "entered-by",
+    dataIndex: "entered-by",
+    key: "entered-by",
+  },
+  ]
 
-    {
+
+  if (roleUSer === "APPROVER" || roleUSer === "ADMIN") {
+    baseColumns.push({
       title: "Action",
       dataIndex: "action",
       key: "action",
       render: (_, record) => generateViewsContent(record),
-    },
-  ];
+    });
+  }
+
+  const columns = [...baseColumns];
+ 
 
   const handleRowClick = (record) => {
     router.push(`/dashboard/sequence/aggregatorSequence/${record["document-id"]}`);

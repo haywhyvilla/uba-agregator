@@ -5,13 +5,22 @@ import moment from 'moment/moment'
 import { NavDropdown, LogoutIcon } from '@/src/utility/svg'
 import { Dropdown, Space, Modal, Form, Button, Spin } from 'antd';
 import logout from "@/src/assets/logout.png"
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/src/context/AppContext";
 
 const DashboardHeader = ({ selectedStepLabel, isSidebarOpen, toggleSidebar }) => {
+    const router = useRouter();
+    const { logoutNow } = useAuth();
     const currentDateTime = moment();
     const formattedDateTime = currentDateTime.format('dddd, MMMM D YYYY');
     const formattedTime = currentDateTime.format('hh:mmA');
 
     const [logoutModal, setLogoutModal] = useState(false);
+
+    // const Logout = () => {
+    //     console.log("fuck i am logging out")
+    //     router.push("/")
+    // }
 
 
     const items = [
@@ -85,6 +94,7 @@ const DashboardHeader = ({ selectedStepLabel, isSidebarOpen, toggleSidebar }) =>
                         <Form.Item className={styles.buttons}>
                             <Button
                                 htmlType="submit"
+                                onClick={logoutNow}
                                 style={{ background: '#7D0003', color: '#fff', marginRight: "2rem", }}
                             >
 

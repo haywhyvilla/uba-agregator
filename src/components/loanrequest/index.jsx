@@ -25,30 +25,33 @@ const LoanRequest = () => {
   const [channelsModal, setChannelsModal] = useState(false);
   const { user } = useAuth();
 const storedToken = user?.token
+console.log("onGod",storedToken)
 const roleUSer = user?.details?.role
 console.log("7565424", roleUSer)
-if (storedToken === undefined) {
-  router.push("/")
-} else {
-  console.log("we are good")
-}
-console.log(storedToken)
-  useEffect(() => {
-    // Function to fetch data
+const storedToken2 = window.localStorage.getItem("refreshToken")
+ console.log("222222222222222222222222222222",storedToken2)
+
+
+// console.log(storedToken)
+
+   // Function to fetch data
+  
     const fetchData = async () => {
+      
       try {
         // Make a GET request to the specified endpoint
         const response = await axios.get(
           `${baseUrl}/channel?status=unapproved`,
           {
             headers: {
-              Authorization: `Bearer ${storedToken}`,
+              Authorization: `Bearer ${storedToken ? storedToken : storedToken2}`,
               'Content-Type': 'application/json',
               "ngrok-skip-browser-warning": "http://localhost:3000",
             }
           }
         );
-
+        console.log()
+  
         // Set the fetched data to the state
         console.log(response);
         setChannels(response.data.data);
@@ -56,10 +59,19 @@ console.log(storedToken)
         console.error("Error fetching data:", error);
       }
     };
+ 
+   
 
-    // Call the fetchData function
+
+  useEffect(() => {
+    setTimeout(() => {
     fetchData();
+    // Set a timeout to delay the fetchData function by 3 seconds
+  }, 2000); // 3000 milliseconds = 3 seconds
+
   }, []);
+
+
 
   const handleSubmit = async (value) => {
     setSubmitLoading(true);
@@ -71,7 +83,7 @@ console.log(storedToken)
       "last-switch-date": value["last-switch-date"],
       "failure-threshold": value["failure-threshold"],
       "data-aggr-code": value["data-aggr-code"],
-      minutes: value["minutes"],
+      "minutes": value["minutes"],
       "del-flg": value["del-flg"],
       "del-date": value["del-date"],
       "del-by": value["del-by"],

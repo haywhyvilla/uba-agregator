@@ -110,6 +110,7 @@ const Sequence = () => {
   const [excelData, setExcelData] = useState([])
   const { user } = useAuth();
   const storedToken = user?.token
+  const roleUSer = user?.details?.role
   if (storedToken === undefined) {
     router.push("/")
   } else {
@@ -287,7 +288,10 @@ const Sequence = () => {
                               justifyContent: 'center'
                             }}
                           >
-                            <CardActions>
+
+                            {
+                              (roleUSer === "INITIATOR" || roleUSer === "ADMIN") &&
+                              <CardActions>
                               <fieldset style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                                 <legend>Attached Document</legend>
                                 <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -449,6 +453,8 @@ const Sequence = () => {
                        */}
                               </fieldset>
                             </CardActions>
+                            }
+                           
                           </div>
 
     </div>

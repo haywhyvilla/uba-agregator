@@ -111,6 +111,8 @@ const Sequence = () => {
   const [excelData, setExcelData] = useState([])
   const { user } = useAuth();
   const storedToken = user?.token
+
+  const roleUSer = user?.details?.role
   if (storedToken === undefined) {
     router.push("/")
   } else {
@@ -288,168 +290,173 @@ const Sequence = () => {
                               justifyContent: 'center'
                             }}
                           >
+
+                          {
+                            (roleUSer === "INITIATOR" || roleUSer === "ADMIN") &&
                             <CardActions>
-                              <fieldset style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                                <legend>Attached Document</legend>
-                                <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                  <form onSubmit={handleSubmit}>
-                                  <CardContent>
-                                    <Paper elevation={3} className={classes.root}>
-                                      <CloudUploadIcon className={classes.icon} color='primary' />
-                                      <Typography variant='h6' color='primary'>
-                                        Upload Files
-                                      </Typography>
-                                      <div>
-                                        <DropzoneArea
-                                          acceptedFiles={['image/*', '.pdf', '.xls', '.xlsx', '.csv']}
-                                          onChange={handleFileChange}
-                                          showAlerts={false}
-                                          dropzoneText='Drag and drop images, PDFs, or Excel files here or click'
-                                          showPreviewsInDropzone={false}
-                                          showPreviews={false}
-                                          filesLimit={10} // Set your preferred limit
-                                        />
-                                      </div>
-                                      {/* <div style={{  p: 2, display: 'flex', flexDirection: 'row', mb:30  }}>
-                           <Button variant="contained" onClick={handleDialogToggle}>
-                            Upload
-                          </Button>
-                          </div> */}
-                                      <Dialog fullWidth maxWidth='md' onClose={handleDialogToggle} open={open}>
-                                        <DialogTitle>File Preview: {filePreview}</DialogTitle>
-                                        <Divider />
-                                        <DialogContent>
-                                          {filePreview && (
-                                            <div>
-                                              <Typography>Preview:</Typography>
-                                              {/* Render the file preview based on its type */}
-                                              {selectedFiles[0]?.type === 'application/pdf' ? (
-                                                <iframe
-                                                  title='PDF Preview'
-                                                  src={URL.createObjectURL(selectedFiles[0])}
-                                                  width='100%'
-                                                  height='500px'
-                                                  style={{ border: 'none' }}
-                                                />
-                                              ) : selectedFiles[0]?.type === 'application/vnd.ms-excel' ||
-                                                selectedFiles[0]?.type ===
-                                                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ? (
-                                                <div>
-                                                  {excelData.length > 0 ? (
-                                                    <StyledTableContainer component={Paper}>
-                                                      <Table>
-                                                        <TableHead>
-                                                          <TableRow>
-                                                            {excelData[0].map((header, index) => (
-                                                              <TableCell key={index}>{header}</TableCell>
+                            <fieldset style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                              <legend>Attached Document</legend>
+                              <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <form onSubmit={handleSubmit}>
+                                <CardContent>
+                                  <Paper elevation={3} className={classes.root}>
+                                    <CloudUploadIcon className={classes.icon} color='primary' />
+                                    <Typography variant='h6' color='primary'>
+                                      Upload Files
+                                    </Typography>
+                                    <div>
+                                      <DropzoneArea
+                                        acceptedFiles={['image/*', '.pdf', '.xls', '.xlsx', '.csv']}
+                                        onChange={handleFileChange}
+                                        showAlerts={false}
+                                        dropzoneText='Drag and drop images, PDFs, or Excel files here or click'
+                                        showPreviewsInDropzone={false}
+                                        showPreviews={false}
+                                        filesLimit={10} // Set your preferred limit
+                                      />
+                                    </div>
+                                    {/* <div style={{  p: 2, display: 'flex', flexDirection: 'row', mb:30  }}>
+                         <Button variant="contained" onClick={handleDialogToggle}>
+                          Upload
+                        </Button>
+                        </div> */}
+                                    <Dialog fullWidth maxWidth='md' onClose={handleDialogToggle} open={open}>
+                                      <DialogTitle>File Preview: {filePreview}</DialogTitle>
+                                      <Divider />
+                                      <DialogContent>
+                                        {filePreview && (
+                                          <div>
+                                            <Typography>Preview:</Typography>
+                                            {/* Render the file preview based on its type */}
+                                            {selectedFiles[0]?.type === 'application/pdf' ? (
+                                              <iframe
+                                                title='PDF Preview'
+                                                src={URL.createObjectURL(selectedFiles[0])}
+                                                width='100%'
+                                                height='500px'
+                                                style={{ border: 'none' }}
+                                              />
+                                            ) : selectedFiles[0]?.type === 'application/vnd.ms-excel' ||
+                                              selectedFiles[0]?.type ===
+                                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ? (
+                                              <div>
+                                                {excelData.length > 0 ? (
+                                                  <StyledTableContainer component={Paper}>
+                                                    <Table>
+                                                      <TableHead>
+                                                        <TableRow>
+                                                          {excelData[0].map((header, index) => (
+                                                            <TableCell key={index}>{header}</TableCell>
+                                                          ))}
+                                                        </TableRow>
+                                                      </TableHead>
+                                                      <TableBody>
+                                                        {excelData.slice(1).map((row, rowIndex) => (
+                                                          <TableRow key={rowIndex}>
+                                                            {row.map((cell, cellIndex) => (
+                                                              <TableCell key={cellIndex}>
+                                                                {typeof cell === 'number' ? cell.toFixed(2) : cell}
+                                                              </TableCell>
                                                             ))}
                                                           </TableRow>
-                                                        </TableHead>
-                                                        <TableBody>
-                                                          {excelData.slice(1).map((row, rowIndex) => (
-                                                            <TableRow key={rowIndex}>
-                                                              {row.map((cell, cellIndex) => (
-                                                                <TableCell key={cellIndex}>
-                                                                  {typeof cell === 'number' ? cell.toFixed(2) : cell}
-                                                                </TableCell>
-                                                              ))}
-                                                            </TableRow>
-                                                          ))}
-                                                        </TableBody>
-                                                      </Table>
-                                                    </StyledTableContainer>
-                                                  ) : (
-                                                    <Typography>No data to display</Typography>
-                                                  )}
-                                                </div>
-                                              ) : (
-                                                <img
-                                                  src={filePreview}
-                                                  alt='File Preview'
-                                                  style={{ maxWidth: '100%', maxHeight: '400px' }}
-                                                />
-                                              )}
-                                            </div>
-                                          )}
-                                        </DialogContent>
-                                      </Dialog>
-                                    </Paper>
-                                  </CardContent>
-                                  {/* Display the selected file names in CardContext */}
-                                  <CardContent className={classes.cardContent}>
-                                    <Typography variant='body1' color='textSecondary'>
-                                      Selected Files:
+                                                        ))}
+                                                      </TableBody>
+                                                    </Table>
+                                                  </StyledTableContainer>
+                                                ) : (
+                                                  <Typography>No data to display</Typography>
+                                                )}
+                                              </div>
+                                            ) : (
+                                              <img
+                                                src={filePreview}
+                                                alt='File Preview'
+                                                style={{ maxWidth: '100%', maxHeight: '400px' }}
+                                              />
+                                            )}
+                                          </div>
+                                        )}
+                                      </DialogContent>
+                                    </Dialog>
+                                  </Paper>
+                                </CardContent>
+                                {/* Display the selected file names in CardContext */}
+                                <CardContent className={classes.cardContent}>
+                                  <Typography variant='body1' color='textSecondary'>
+                                    Selected Files:
+                                  </Typography>
+                                  {fileData.map((fileName, index) => (
+                                    <Typography
+                                      key={index}
+                                      variant='body2'
+                                      color='textSecondary'
+                                      className={classes.fileName}
+                                    >
+                                      {fileName}
                                     </Typography>
-                                    {fileData.map((fileName, index) => (
-                                      <Typography
-                                        key={index}
-                                        variant='body2'
-                                        color='textSecondary'
-                                        className={classes.fileName}
-                                      >
-                                        {fileName}
-                                      </Typography>
-                                    ))}
-                                  </CardContent>
-                                  <Divider sx={{ m: '0 !important' }} />
-                  <CardActions>
-                    <Button
-                      type='submit'
-                      sx={{ mr: 2, backgroundColor: '#f50606' }}
-                      variant='contained'
-                      disabled={isButtonDisabled}
-                    >
-                      {isButtonDisabled ? 'Processing...' : 'Submit'}
-                    </Button>
-                  </CardActions>
-                                  </form>
-                                </Box>
+                                  ))}
+                                </CardContent>
+                                <Divider sx={{ m: '0 !important' }} />
+                <CardActions>
+                  <Button
+                    type='submit'
+                    sx={{ mr: 2, backgroundColor: '#f50606' }}
+                    variant='contained'
+                    disabled={isButtonDisabled}
+                  >
+                    {isButtonDisabled ? 'Processing...' : 'Submit'}
+                  </Button>
+                </CardActions>
+                                </form>
+                              </Box>
 
-                                {/* <Dialog fullWidth maxWidth="md" onClose={handleDialogToggle} open={open}>
-                              <DialogTitle>Excel Data: {selectedFile}</DialogTitle>
-                              <Divider />
-                              <DialogContent>
-                                {excelData.length > 0 ? (
-                                  <StyledTableContainer component={Paper}>
-                                    <Table>
-                                      <TableHead>
-                                        <TableRow>
-                                          {excelData[0].map((header, index) => (
-                                            <TableCell key={index}>{header}</TableCell>
+                              {/* <Dialog fullWidth maxWidth="md" onClose={handleDialogToggle} open={open}>
+                            <DialogTitle>Excel Data: {selectedFile}</DialogTitle>
+                            <Divider />
+                            <DialogContent>
+                              {excelData.length > 0 ? (
+                                <StyledTableContainer component={Paper}>
+                                  <Table>
+                                    <TableHead>
+                                      <TableRow>
+                                        {excelData[0].map((header, index) => (
+                                          <TableCell key={index}>{header}</TableCell>
+                                        ))}
+                                      </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                      {excelData.slice(1).map((row, rowIndex) => (
+                                        <TableRow key={rowIndex}>
+                                          {row.map((cell, cellIndex) => (
+                                            <TableCell key={cellIndex}>
+                                              {typeof cell === 'number' ? cell.toFixed(2) : cell}
+                                            </TableCell>
                                           ))}
                                         </TableRow>
-                                      </TableHead>
-                                      <TableBody>
-                                        {excelData.slice(1).map((row, rowIndex) => (
-                                          <TableRow key={rowIndex}>
-                                            {row.map((cell, cellIndex) => (
-                                              <TableCell key={cellIndex}>
-                                                {typeof cell === 'number' ? cell.toFixed(2) : cell}
-                                              </TableCell>
-                                            ))}
-                                          </TableRow>
-                                        ))}
-                                      </TableBody>
-                                    </Table>
-                                  </StyledTableContainer>
-                                ) : (
-                                  <Typography>No data to display</Typography>
-                                )}
+                                      ))}
+                                    </TableBody>
+                                  </Table>
+                                </StyledTableContainer>
+                              ) : (
+                                <Typography>No data to display</Typography>
+                              )}
 
-                                        {filePreview && selectedFile && (
-                                            <CardMedia
-                                              component="img"
-                                              alt="File Preview"
-                                              height="140"
-                                              image={filePreview}
-                                            />
-                                          )}
+                                      {filePreview && selectedFile && (
+                                          <CardMedia
+                                            component="img"
+                                            alt="File Preview"
+                                            height="140"
+                                            image={filePreview}
+                                          />
+                                        )}
 
-                              </DialogContent>
-                            </Dialog>
-                       */}
-                              </fieldset>
-                            </CardActions>
+                            </DialogContent>
+                          </Dialog>
+                     */}
+                            </fieldset>
+                          </CardActions>
+                          }
+                           
                           </div>
 
     </div>

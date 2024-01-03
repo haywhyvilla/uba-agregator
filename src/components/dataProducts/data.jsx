@@ -18,6 +18,7 @@ const SequenceData = () => {
   const [channels, setChannels] = useState([]);
   const { user } = useAuth();
   const storedToken = user?.token
+  const roleUSer = user?.details?.role
   if (storedToken === undefined) {
     router.push("/")
   } else {
@@ -63,7 +64,7 @@ const SequenceData = () => {
     </div>
   );
 
-  const columns = [
+  const baseColumns = [
     {
         title: "country-code",
         dataIndex: "country-code",
@@ -108,13 +109,19 @@ const SequenceData = () => {
       key: "amount",
     },
 
-    {
+  
+  ];
+
+  if (roleUSer === "APPROVER" || roleUSer === "ADMIN") {
+    baseColumns.push({
       title: "Action",
       dataIndex: "action",
       key: "action",
       render: (_, record) => generateViewsContent(record),
-    },
-  ];
+    });
+  }
+
+  const columns = [...baseColumns];
 
   const handleRowClick = (record) => {
     router.push(`/dashboard/products/dataProducts/${record["document-id"]}`);

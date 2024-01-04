@@ -28,8 +28,13 @@ const storedToken = user?.token
 console.log("onGod",storedToken)
 const roleUSer = user?.details?.role
 console.log("7565424", roleUSer)
-const storedToken2 = window.localStorage.getItem("refreshToken")
- console.log("222222222222222222222222222222",storedToken2)
+// const storedToken2 = window.localStorage.getItem("refreshToken")
+//  console.log("222222222222222222222222222222",storedToken2)
+ if (storedToken === undefined) {
+  router.push("/")
+} else {
+  console.log("we are good")
+}
 
 
 // console.log(storedToken)
@@ -44,7 +49,7 @@ const storedToken2 = window.localStorage.getItem("refreshToken")
           `${baseUrl}/channel?status=unapproved`,
           {
             headers: {
-              Authorization: `Bearer ${storedToken ? storedToken : storedToken2}`,
+              Authorization: `Bearer ${storedToken}`,
               'Content-Type': 'application/json',
               "ngrok-skip-browser-warning": "http://localhost:3000",
             }

@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     // Implement your login logic using axios or any other method
     try {
       // Your login API call here
-      const response = await axios.post('https://382a-129-205-113-182.ngrok-free.app/auth', values);
+      const response = await axios.post('https://dd14-102-88-35-146.ngrok-free.app/auth', values);
       setUser(response.data);
       setToken(response.data.token)
       setStatus(response.data.status.type)
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       // Your token refresh API call here
-      const response = await axios.post('https://382a-129-205-113-182.ngrok-free.app/auth/refresh', formData);
+      const response = await axios.post('https://dd14-102-88-35-146.ngrok-free.app/auth/refresh', formData);
       window.localStorage.setItem("refreshToken", JSON.stringify(response.data.token))
       window.localStorage.setItem("nameStore", JSON.stringify(response.data.details.username))
       window.localStorage.setItem("tokenStore", JSON.stringify(response.data.details["refresh-token"]))

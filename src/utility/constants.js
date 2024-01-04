@@ -1,1 +1,1 @@
-export const baseUrl = "https://382a-129-205-113-182.ngrok-free.app/nip";
+export const baseUrl = "https://dd14-102-88-35-146.ngrok-free.app/nip";

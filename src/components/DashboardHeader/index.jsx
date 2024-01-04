@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react'
 import styles from "./Header.module.scss"
 import Image from "next/image"
@@ -5,11 +7,10 @@ import moment from 'moment/moment'
 import { NavDropdown, LogoutIcon } from '@/src/utility/svg'
 import { Dropdown, Space, Modal, Form, Button, Spin } from 'antd';
 import logout from "@/src/assets/logout.png"
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/src/context/AppContext";
 
 const DashboardHeader = ({ selectedStepLabel, isSidebarOpen, toggleSidebar }) => {
-    const router = useRouter();
+    
     const { logoutNow } = useAuth();
     const currentDateTime = moment();
     const formattedDateTime = currentDateTime.format('dddd, MMMM D YYYY');

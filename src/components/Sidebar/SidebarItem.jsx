@@ -1,4 +1,6 @@
 
+"use client";
+
 import { useRouter } from "next/navigation";
 import styles from "./sidebar.module.scss";
 import Image from "next/image";
